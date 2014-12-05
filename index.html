@@ -1,0 +1,104 @@
+<html>
+  <head>
+    
+    <script src="jquery.min.js"></script>
+    <script src="jquery-ui.min.js"></script>
+    
+    <script src="index.js"></script>
+    
+    <script src="coord.js"></script>
+    <script src="registry.js"></script>
+    <script src="block.js"></script>
+    <script src="world.js"></script>
+    <script src="main.js"></script>
+    
+    <link rel="stylesheet" href="index.css"/>
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+    
+    <script src="mods/minecraft.js"></script>
+    <link rel="stylesheet" href="mods/minecraft.css"/>
+  </head>
+
+  <body>
+    
+    
+    <div id="selector-outer">
+      <div id="selector-tabs"><div class="tab selected"></div><div class="tab"></div><div class="tab"></div><div class="tab"></div></div>
+      <div id="selector-fullwidth"><div id="selector"></div></div>
+      <div id="hotbar-border"><div id="hotbar">
+        <div class="hotbar-item"></div><div class="hotbar-item"></div><div class="hotbar-item"></div><div class="hotbar-item"></div><div class="hotbar-item"></div><div class="hotbar-item"></div><div class="hotbar-item"></div><div class="hotbar-item"></div><div class="hotbar-item"></div>
+      </div></div>
+    </div>
+    
+    <div class="editor-toolbar">
+      <div class="buttonset horizontal">
+        <img class="left add" src="assets/button_left_add.png">
+        <img class="left rem" src="assets/button_left_rem.png">
+      </div>
+      <div class="buttonset horizontal">
+        <img class="right rem" src="assets/button_right_rem.png">
+        <img class="right add" src="assets/button_right_add.png">
+      </div>
+      <div class="buttonset vertical">
+        <img class="top add" src="assets/button_top_add.png">
+        <img class="top rem" src="assets/button_top_rem.png">
+      </div>
+      <div class="buttonset vertical">
+        <img class="bottom rem" src="assets/button_bottom_rem.png">
+        <img class="bottom add" src="assets/button_bottom_add.png">
+      </div>
+    </div>
+    
+    <div id="axes">
+      <img src="assets/axes.png">
+    </div>
+    <div id="editor-outer">
+      <div id="editor">
+        <div id="grid">
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="context-wrapper"><div class="context"></div></div>
+    
+    <div class="edit-pane">
+      <div class="left-pane">
+        <div id="experiment">
+          <div id="cube" class="spin"><!-- style="-webkit-transform: rotateX(-45deg) rotateY(45deg);" -->
+            <div class="face top">
+              T
+            </div>
+            <div class="face south">
+              S
+            </div>
+            <div class="face east">
+              E
+            </div>
+            <div class="face north">
+              N
+            </div>
+            <div class="face west">
+              W
+            </div>
+            <div class="face bottom">
+              B
+            </div>
+          </div>
+        </div>
+        <div id="start-facing-select"></div>
+        <div class="pauseplay" onclick="$('#cube').toggleClass('paused');"></div>
+      </div>
+      <div class="right-pane"></div>
+      <i class="edit-pane-close fa fa-times"></i>
+    </div>
+    
+  </body>
+  
+</html>
+
+<!--
+
+<div class="selector-row">
+
+-->
