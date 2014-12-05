@@ -1,0 +1,39 @@
+/* line 9, /Users/piercecorcoran/Desktop/MineCraft Draw/mods/minecraft.scss */
+.mc-face {
+  position: absolute; }
+
+/* line 14, /Users/piercecorcoran/Desktop/MineCraft Draw/mods/minecraft.scss */
+.mc-face.flowerA {
+  height: 16px;
+  width: 22px;
+  -webkit-transform: rotateX(45deg);
+  -moz-transform: rotateX(45deg);
+  -ms-transform: rotateX(45deg);
+  -o-transform: rotateX(45deg);
+  transform: rotateX(45deg); }
+
+/* line 20, /Users/piercecorcoran/Desktop/MineCraft Draw/mods/minecraft.scss */
+.mc-face.flowerB {
+  height: 16px;
+  width: 22px;
+  -webkit-transform: rotateX(45deg);
+  -moz-transform: rotateX(45deg);
+  -ms-transform: rotateX(45deg);
+  -o-transform: rotateX(45deg);
+  transform: rotateX(45deg); }
+
+/* line 26, /Users/piercecorcoran/Desktop/MineCraft Draw/mods/minecraft.scss */
+.mc-face.railbed {
+  height: 16px;
+  width: 16px;
+  -webkit-transform: rotateX(-90deg) rotate(180deg) translateZ(8px);
+  -moz-transform: rotateX(-90deg) rotate(180deg) translateZ(8px);
+  -ms-transform: rotateX(-90deg) rotate(180deg) translateZ(8px);
+  -o-transform: rotateX(-90deg) rotate(180deg) translateZ(8px);
+  transform: rotateX(-90deg) rotate(180deg) translateZ(8px); }
+
+/* line 32, /Users/piercecorcoran/Desktop/MineCraft Draw/mods/minecraft.scss */
+.mc-face.something {
+  border: none; }
+
+/*# sourceMappingURL=minecraft.css.map */

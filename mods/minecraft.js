@@ -1,17 +1,12 @@
 function ModMinecraft() {
   
   var m = this;
+  this.name = "minecraft";
   
   this.r = function(name, type) {
     if (typeof type === "undefined") {
       return Main.root + "assets/minecraft/textures/blocks/" + name + ".png";
     }
-  }
-  
-  this.t = function(name, type) {
-    return function(side) {
-      return m.tex(name, type);
-    };
   }
   
   this.tex = function(name, type) {
@@ -20,109 +15,194 @@ function ModMinecraft() {
     return elem;
   };
   
-  this.basicBlock = function( id, meta, tex, name, func ) {
-    return new Block(id, meta, function(b) {
-      b.getTexture = m.t(tex);
-      b.setUnlocalizedName(name);
-      if(typeof func !== "undefined") { func(b); }
-    });
-  }
-  
-  this.sideTopBottom = function( id, meta, name, obj, func ) {
-    return new Block(id, meta, function(b) {
-      b.getTexture = function(side) {
-        if(obj['facing'] === true) {
-          var f = b.sideFacing(side);
-          
-          if(f == Block.FRONT) {
-            return m.tex(obj['front']);
-          }
-          if(f == Block.LEFT || f == Block.RIGHT || f == Block.TOP || f == Block.BOTTOM) {
-            var t = obj['sides'];
-            if(typeof obj['sides'] === "undefined") {
-              t = obj['side']
-            }
-            t = m.tex(t);
-            var rot = 0;
-            if(b.facing === Coord.NORTH) {
-              if(Coord.isTop(side) || Coord.isBottom(side)) {
-                rot = 0;
-              }
-              if(side === Coord.WEST) {
-                rot = -90
-              }
-              if(side === Coord.EAST) {
-                rot = 90;
-              }
-            }
-            if(b.facing === Coord.WEST) {
-              if(Coord.isTop(side) || Coord.isBottom(side)) {
-                rot = 0;
-              }
-              if(side === Coord.NORTH) {
-                rot = -90
-              }
-              if(side === Coord.SOUTH) {
-                rot = 90;
-              }
-            }
-            if(b.facing === Coord.EAST) {
-              if(Coord.isTop(side) || Coord.isBottom(side)) {
-                rot = 0;
-              }
-              if(side === Coord.SOUTH) {
-                rot = -90
-              }
-              if(side === Coord.NORTH) {
-                rot = 90;
-              }
-            }
-            if(b.facing === Coord.SOUTH) {
-              if(Coord.isTop(side) || Coord.isBottom(side)) {
-                rot = 0;
-              }
-              if(side === Coord.EAST) {
-                rot = -90
-              }
-              if(side === Coord.WEST) {
-                rot = 90;
-              }
-            }
-            t.css('-webkit-transform', 'rotate(' + rot + 'deg)');
-            return t;
-          }
-          if(f == Block.BACK) {
-            return m.tex(obj['back']);
-          }
-          
-        } else {
-          
-          if(Coord.isTop(side)) {
-            return m.tex(obj['top']);
-          }
-          if(Coord.isSide(side)) {
-            var t = obj['sides'];
-            if(typeof obj['sides'] === "undefined") {
-              t = obj['side']
-            }
-            return m.tex(t);
-          }
-          if(Coord.isBottom(side)) {
-            return m.tex(obj['bottom']);
-          }
-          
-        }
-      };
-      
-      b.setUnlocalizedName(name);
-      
-      if(typeof func !== "undefined") { func(b); }
-      
-    });
-  }
+  this.basicBlock = function( obj ) {
+    if(typeof obj['texF'] === "undefined") {
+      obj['texF'] = this.tex;
+    }
+    obj['mod'] = this;
+    
+    return Block.build( obj );
+  };
   
   this.init = function(reg) {
-    var stone = this.basicBlock( 1, 0, 'stone', 'minecraft:stone');
+    /** 
+      Basic  { id: 0, meta: 0, name: 'stone', tex: 'stone', (func: function(b) {}) }
+      
+      Static { id: 0, meta: 0, name: 'stone', tex: {
+        top:    'loc',
+        bottom: 'loc',
+        north:  'loc',
+        south:  'loc',
+        east:   'loc',
+        west:   'loc'
+      }, type: 'static', (func: function(b) {}) }
+      
+      Sides-Top-Bottom { id: 0, meta: 0, name: 'stone', tex: {
+        top:    'loc',
+        sides:  'loc',
+        bottom: 'loc'
+      }, type: 'stb', (func: function(b) {}) }
+      
+      Facing { id: 0, meta: 0, name: 'stone', tex: {
+        front: 'loc',
+        back: 'loc',
+        side(s): 'loc',
+        ( left/right/top/bottom: 'loc' )
+      }, type: 'facing', (func: function(b) {}) }
+      
+      any can have a fixed: attr with top, bottom, north, south, east, west properties containing locations of those faces
+      any can have validDirections property, which is the string 'any' or an array conaining up to one of each of the following
+        'up', 'down', 'north', 'south', 'east', 'west', they can be in any order, but must be in same case
+      */
+    var blocks = [
+      { id: 1, meta: 0, name: 'stone', tex: 'stone' },
+      { id: 1, meta: 1, name: 'granite', tex: 'stone_granite' },
+      { id: 1, meta: 2, name: 'granite_smooth', tex: 'stone_granite_smooth' },
+      { id: 1, meta: 3, name: 'diorite', tex: 'stone_diorite' },
+      { id: 1, meta: 4, name: 'diorite_smooth', tex: 'stone_diorite_smooth' },
+      { id: 1, meta: 5, name: 'andesite', tex: 'stone_andesite' },
+      { id: 1, meta: 6, name: 'andesite_smooth', tex: 'stone_andesite_smooth' },
+      
+      { id: 2, meta: 0, name: 'grass', tex: {
+        top:    'grass_top_green',
+        sides:  'grass_side',
+        bottom: 'dirt'
+      }, type: 'stb'},
+      { id: 3, meta: 0, name: 'dirt', tex: 'dirt' },
+      { id: 3, meta: 1, name: 'coarse_dirt', tex: 'coarse_dirt' },
+      { id: 3, meta: 2, name: 'podzol', tex: {
+        top:    'dirt_podzol_top',
+        sides:  'dirt_podzol_side',
+        bottom: 'dirt'
+      }, type: 'stb'},
+      { id: 4, meta: 0, name: 'cobblestone', tex: 'cobblestone' },
+      
+      { id: 5, meta: 0, name: 'oak_planks', tex: 'planks_oak' },
+      { id: 5, meta: 1, name: 'spruce_planks', tex: 'planks_spruce' },
+      { id: 5, meta: 2, name: 'birch_planks', tex: 'planks_birch' },
+      { id: 5, meta: 3, name: 'jungle_planks', tex: 'planks_jungle' },
+      { id: 5, meta: 4, name: 'acacia_planks', tex: 'planks_acacia' },
+      { id: 5, meta: 5, name: 'dark_oak_planks', tex: 'planks_big_oak' },
+      
+      { id: 7, meta: 0, name: 'bedrock', tex: 'bedrock' },
+      
+      { id: 8, meta: 0, name: 'flowing_water', tex: 'water' },
+      { id: 9, meta: 0, name: 'still_water', tex: 'water' },
+      { id: 10, meta: 0, name: 'flowing_lava', tex: 'lava' },
+      { id: 11, meta: 0, name: 'still_lava', tex: 'lava' },
+      
+      { id: 12, meta: 0, name: 'sand', tex: 'sand' },
+      { id: 12, meta: 1, name: 'red_sand', tex: 'red_sand' },
+      { id: 13, meta: 0, name: 'gravel', tex: 'gravel' },
+      
+      { id: 14, meta: 0, name: 'gold_ore', tex: 'gold_ore' },
+      { id: 15, meta: 0, name: 'iron_ore', tex: 'iron_ore' },
+      { id: 16, meta: 0, name: 'coal_ore', tex: 'coal_ore' },
+      
+      { id: 17, meta: 0, name: 'oak_log', tex: {
+        top:    'log_oak_top',
+        sides:  'log_oak',
+        bottom: 'log_oak_top'
+      }, type: 'stb' },
+      { id: 17, meta: 1, name: 'spruce_log', tex: {
+        top:    'log_spruce_top',
+        sides:  'log_spruce',
+        bottom: 'log_spruce_top'
+      }, type: 'stb' },
+      { id: 17, meta: 2, name: 'birch_log', tex: {
+        top:    'log_birch_top',
+        sides:  'log_birch',
+        bottom: 'log_birch_top'
+      }, type: 'stb' },
+      { id: 17, meta: 3, name: 'jungle_log', tex: {
+        top:    'log_jungle_top',
+        sides:  'log_jungle',
+        bottom: 'log_jungle_top'
+      }, type: 'stb' },
+      
+      { id: 18, meta: 0, name: 'oak_leaves', tex: 'leaves_oak_green' },
+      { id: 18, meta: 1, name: 'spruce_leaves', tex: 'leaves_spruce_green' },
+      { id: 18, meta: 2, name: 'birch_leaves', tex: 'leaves_birch_green' },
+      { id: 18, meta: 3, name: 'jungle_leaves', tex: 'leaves_jungle_green' },
+      
+      { id: 19, meta: 0, name: 'sponge', tex: 'sponge' },
+      { id: 19, meta: 1, name: 'wet_sponge', tex: 'sponge_wet' },
+      
+      { id: 20, meta: 0, name: 'glass', tex: 'glass' },
+      
+      { id: 21, meta: 0, name: 'lapis_ore', tex: 'lapis_ore' },
+      { id: 22, meta: 0, name: 'lapis_block', tex: 'lapis_block' },
+      
+      { id: 23, meta: 0, name: 'dispenser', tex: {
+        front: 'dispenser_front_horizontal',
+        back: 'furnace_side',
+        sides: 'furnace_side',
+        top: 'furnace_top',
+        bottom: 'furnace_top',
+        level: true
+      }, canFace: 'any', type: 'facing' },
+      
+      { id: 24, meta: 0, name: 'sandstone', tex: {
+        top:    'sandstone_top',
+        sides:  'sandstone_normal',
+        bottom: 'sandstone_bottom'
+      }, type: 'stb' },
+      { id: 24, meta: 1, name: 'chiseled_sandstone', tex: {
+        top:    'sandstone_top',
+        sides:  'sandstone_carved',
+        bottom: 'sandstone_bottom'
+      }, type: 'stb' },
+      { id: 24, meta: 2, name: 'smooth_sandstone', tex: {
+        top:    'sandstone_top',
+        sides:  'sandstone_smooth',
+        bottom: 'sandstone_top'
+      }, type: 'stb' },
+      
+      { id: 25, meta: 0, name: 'noteblock', tex: 'noteblock' },
+      
+      { id: 27, meta: 0, name: 'powered_rail', tex: {
+        icon:'rail_golden',
+        render: function() {
+          var face = $('<div class="mc-face railbed"></div>');
+          face.append(m.tex('rail_golden'));
+          return face;
+        }
+      }, type:"customRender"},
+      
+      { id: 28, meta: 0, name: 'detector_rail', tex: {
+        icon:'rail_detector',
+        render: function() {
+          var face = $('<div class="mc-face railbed"></div>');
+          face.append(m.tex('rail_detector'));
+          return face;
+        }
+      }, type:"customRender"},
+      
+      { id: 29, meta: 0, name: 'sticky_piston', tex: {
+        front: 'piston_top_sticky',
+        back: 'piston_bottom',
+        sides: 'piston_side'
+      }, canFace: 'any', type: 'facing'},
+    ];
+    for(var i in blocks) {
+      var blockObj = blocks[i];
+      var b = this.basicBlock(blockObj);
+      reg.registerBlock(b);
+    }
+  }
+  
+  
+  
+  
+  Registry.registerMod(this);
+}
+
+this.mods['minecraft'] = new ModMinecraft();
+
+/*
+
+
+var stone = this.basicBlock( 1, 0, 'stone', 'minecraft:stone');
     reg.registerBlock(stone);
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     
@@ -281,21 +361,12 @@ function ModMinecraft() {
     reg.registerBlock(lapis_block);
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     
-    var dispenser = new Block(23, 0, function(b) {
-      b.getTexture = function(side) {
-        if(side == b.sideFacing(Block.FRONT)) {
-          return m.tex('dispenser_front');
-        }
-        if(side == b.sideFacing(Block.LEFT) || side == b.sideFacing(Block.RIGHT) || side == b.sideFacing(Block.BACK)) {
-          return m.tex('furnace_side');
-        }
-        if(side == b.sideFacing(Block.TOP) || side == b.sideFacing(Block.BOTTOM)) {
-          return m.tex('furnace_top');
-        }
-      };
-      
-      b.setUnlocalizedName('minecraft:dispenser');
-      
+    var dispenser = Block.build(23, 0, 'minecraft:dispenser', {
+      facing:true, sides:'furnace_side', front:'dispenser_front', back:'furnace_side',
+      fixed: {
+        top: 'furnace_top',
+        bottom: 'furnace_bottom'
+      }
     });
     reg.registerBlock(dispenser);
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -551,13 +622,11 @@ function ModMinecraft() {
     var _ = this.basicBlock(-1, 0, '_', 'minecraft:_');
     reg.registerBlock(_);
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-    
-  }
-  
-  
-  
-  
-  Registry.registerMod(this);
-}
 
-this.mods['minecraft'] = new ModMinecraft();
+
+
+
+
+
+
+*/

@@ -1,0 +1,34 @@
+@mixin transform($trans) {
+  -webkit-transform: $trans;
+     -moz-transform: $trans;
+      -ms-transform: $trans;
+       -o-transform: $trans;
+          transform: $trans;
+}
+
+.mc-face {
+  position:absolute;
+
+}
+
+.mc-face.flowerA {
+  height:16px;
+  width:22px;
+  @include transform(rotateX(45deg));
+}
+
+.mc-face.flowerB {
+  height:16px;
+  width:22px; 
+  @include transform(rotateX(45deg));
+}
+
+.mc-face.railbed {
+  height:16px;
+  width:16px;
+  @include transform(rotateX(-90deg) rotate(180deg) translateZ(16px/2) );
+}
+
+.mc-face.something {
+  border:none;
+}

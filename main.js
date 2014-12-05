@@ -34,13 +34,18 @@ function Main() {
   
   this.redrawEditorTexture = function() {
     var b = this.editing;
-    
-    $('.face.north' ).html(b.getTexture(Coord.NORTH));
-    $('.face.south' ).html(b.getTexture(Coord.SOUTH));
-    $('.face.east'  ).html(b.getTexture(Coord.EAST ));
-    $('.face.west'  ).html(b.getTexture(Coord.WEST ));
-    $('.face.top'   ).html(b.getTexture(Coord.UP   ));
-    $('.face.bottom').html(b.getTexture(Coord.DOWN ));
+    $('#cube .face').html('');
+    $('#cube .custom').html('');
+    if(b.hasCustom3DRenderer()) {
+      $('#cube .custom').html(b.getCustom3DRenderer());
+    } else {
+      $('#cube .face.north' ).html(b.getTexture(Coord.NORTH));
+      $('#cube .face.south' ).html(b.getTexture(Coord.SOUTH));
+      $('#cube .face.east'  ).html(b.getTexture(Coord.EAST ));
+      $('#cube .face.west'  ).html(b.getTexture(Coord.WEST ));
+      $('#cube .face.top'   ).html(b.getTexture(Coord.UP   ));
+      $('#cube .face.bottom').html(b.getTexture(Coord.DOWN ));
+    }
     
   }
   
@@ -218,7 +223,7 @@ function Main() {
         $('.context').removeClass('on');
       });
       
-      menu.one('mousedown', function() {
+      menu.one('click', function() {
         $('.context').removeClass('on');
       });
       
@@ -319,7 +324,7 @@ function Main() {
   this.redrawSelector();
   this.registerEvents();
   this.registerOnceEvents();
-    
+  
 }
 
 Main.root = "/";

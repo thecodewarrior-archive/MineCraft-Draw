@@ -14,7 +14,6 @@ function Registry() {
   };
   
   this.eachBlock = function(f) {
-    console.log(this.blocks);
     $.each(this.blocks, function(id, o) {
       if(typeof o !== "undefined") {
         $.each(o, function(meta, block) {
@@ -41,14 +40,17 @@ function Registry() {
   
   this.runMods = function () {
     var reg = this;
+    console.groupCollapsed("Running Mods");
     $.each(Registry.mods, function (i, o) {
+      console.groupCollapsed("mod: " + o.name);
       o.init(reg);
+      console.groupEnd();
     });
+    console.groupEnd();
   };
 }
 
 Registry.mods = [];
 Registry.registerMod = function (mod) {
-  console.log('registering mod');
   Registry.mods.push(mod);
 };

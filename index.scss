@@ -253,6 +253,7 @@
   height:150px;
   border:2px solid black;
   background: #FFF;
+  font-size:16px;
 }
 
 .edit-pane.open {
@@ -298,6 +299,8 @@
 @mixin transform($trans) {
   -webkit-transform: $trans;
      -moz-transform: $trans;
+      -ms-transform: $trans;
+       -o-transform: $trans;
           transform: $trans;
 }
 
@@ -355,10 +358,10 @@ $face-size: 16px;
 
 @include keyframes(cube) {
   from {
-    @include transform( rotateY(0deg) rotateX(45deg) );
+    @include transform(scale3d(2,2,2) rotateY(0deg) rotateX(25deg) );
   }
   to {
-    @include transform( rotateY(360deg) rotateX(45deg) );
+    @include transform(scale3d(2,2,2) rotateY(360deg) rotateX(25deg) );
   }
 }
 
@@ -366,7 +369,7 @@ $face-size: 16px;
   position: absolute;
   height: $face-size;
   width: $face-size;
-  background-color: rgba(50, 50, 50, 0.2);
+  background:none;
   color: #000;
 }
 
@@ -405,33 +408,34 @@ $face-size: 16px;
 .bottom:hover:after { content: "B"; }
 
 #cube .top  {
-  @include transform(scale3d(2,2,2) rotateX(90deg) translateZ($face-size/2));
+  @include transform(rotateX(90deg) translateZ($face-size/2));
 }
 
 #cube .south {
-  @include transform(scale3d(2,2,2) translateZ($face-size/2));
+  @include transform(translateZ($face-size/2));
 }
 
 #cube .east {
-  @include transform(scale3d(2,2,2) rotateY(90deg) translateZ($face-size/2));
+  @include transform(rotateY(90deg) translateZ($face-size/2));
 }
 
 #cube .north {
-  @include transform(scale3d(2,2,2) rotateY(180deg) translateZ($face-size/2));
+  @include transform(rotateY(180deg) translateZ($face-size/2));
 }
 
 #cube .west {
-  @include transform(scale3d(2,2,2) rotateY(-90deg) translateZ($face-size/2));
+  @include transform(rotateY(-90deg) translateZ($face-size/2));
 }
 
 #cube .bottom {
-  @include transform(scale3d(2,2,2) rotateX(-90deg) rotate(180deg) translateZ($face-size/2));
+  @include transform(rotateX(-90deg) rotate(180deg) translateZ($face-size/2));
 }
 
 #start-facing-select {
-  width:10px;
-  height:10px;
-  background:#C00;
+  height: 1.1em;
+  background: #C00; 
+  text-align: center;
+  color:#fff;
 }
 
 .paused {
@@ -443,7 +447,10 @@ $face-size: 16px;
 }
 
 .pauseplay {
-  width:20px;
-  height:10px;
+  width: 20px;
+  height: 1.1em;
   background: #0C0;
+  text-align: center;
+  padding-top: 0.15em;
+  margin:0 auto;
 }

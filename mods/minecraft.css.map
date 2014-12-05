@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "minecraft.css",
+  "sources": [
+    "minecraft.scss"
+  ],
+  "names": [],
+  "mappings": ";AAQA;EACE,UAAS;;;AAIX,QAAQ;EACN,QAAO;EACP,OAAM;EAdN,mBAemB;EAdhB,gBAcgB;EAbf,eAae;EAZd,cAYc;EAXX,WAWW;;;AAGrB,QAAQ;EACN,QAAO;EACP,OAAM;EApBN,mBAqBmB;EApBhB,gBAoBgB;EAnBf,eAmBe;EAlBd,cAkBc;EAjBX,WAiBW;;;AAGrB,QAAQ;EACN,QAAO;EACP,OAAM;EA1BN,mBA2BiC;EA1B9B,gBA0B8B;EAzB7B,eAyB6B;EAxB5B,cAwB4B;EAvBzB,WAuByB;;;AAGnC,QAAQ;EACN,QAAO",
+  "sourceRoot": ""
+}
