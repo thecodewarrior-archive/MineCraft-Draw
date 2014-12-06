@@ -333,7 +333,7 @@ function Main() {
   
 }
 
-Main.root = "/";
+Main.root = "";
 
 $(function() {
   window.main = new Main();
