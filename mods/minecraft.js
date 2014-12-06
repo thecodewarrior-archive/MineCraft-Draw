@@ -24,6 +24,32 @@ function ModMinecraft() {
     return Block.build( obj );
   };
   
+  this.renderers = {
+    rail: function(obj) {
+      var railbed = $('<div class="mc-face railbed"></div>');
+      railbed.append(m.tex(obj['tex']));
+      var set = railbed.add(m.renderers.ground(obj));
+      return set;
+    },
+    X: function(obj) {
+      var one = $('<div class="mc-face Xa"></div>');
+      one.append(m.tex(obj['tex']));
+      var two = $('<div class="mc-face Xb"></div>');
+      two.append(m.tex(obj['tex']));
+      var set = one.add(two).add(m.renderers.ground(obj));
+      return set;
+    },
+    ground: function(obj) {
+      var ground = $('<div class="mc-face ground"></div>');
+      var gnd = obj['ground'];
+      if(typeof obj['ground'] === "undefined") {
+        gnd = 'stone';
+      }
+      ground.append(m.tex(gnd));
+      return ground;
+    }
+  }
+  
   this.init = function(reg) {
     /** 
       Basic  { id: 0, meta: 0, name: 'stone', tex: 'stone', (func: function(b) {}) }
@@ -50,11 +76,19 @@ function ModMinecraft() {
         ( left/right/top/bottom: 'loc' )
       }, type: 'facing', (func: function(b) {}) }
       
+      Custom Render: { id: 0, meta: 0, name: 'stone', tex: {
+        icon:'stone',
+        renderParam: {
+          tex:'stone'
+        },
+        render: this.renderers.something
+      }, type:"customRender"},
+      
       any can have a fixed: attr with top, bottom, north, south, east, west properties containing locations of those faces
       any can have validDirections property, which is the string 'any' or an array conaining up to one of each of the following
         'up', 'down', 'north', 'south', 'east', 'west', they can be in any order, but must be in same case
       */
-    var blocks = [
+    this.blocksTemplates = [
       { id: 1, meta: 0, name: 'stone', tex: 'stone' },
       { id: 1, meta: 1, name: 'granite', tex: 'stone_granite' },
       { id: 1, meta: 2, name: 'granite_smooth', tex: 'stone_granite_smooth' },
@@ -162,20 +196,40 @@ function ModMinecraft() {
       
       { id: 27, meta: 0, name: 'powered_rail', tex: {
         icon:'rail_golden',
-        render: function() {
-          var face = $('<div class="mc-face railbed"></div>');
-          face.append(m.tex('rail_golden'));
-          return face;
-        }
-      }, type:"customRender"},
+        renderParam: {
+          tex: 'rail_golden'
+        },
+        render: this.renderers.rail
+      }, type:"customRender", func: function(b) {
+        b.getContextElements = function() {
+          var power = $('<i></i>');
+          power.addClass('fa');
+          power.addClass('fa-plug');
+          power.addClass('pointer');
+          if(b.paramObj.tex.icon === 'rail_golden_powered') {
+            power.addClass('context-item-active');
+          }
+          power.click(function() {
+            if(b.paramObj.tex.icon === 'rail_golden') {
+              b.paramObj.tex.icon = 'rail_golden_powered';
+              b.renderParam.tex = 'rail_golden_powered';
+            } else {
+              b.paramObj.tex.icon = 'rail_golden';
+              b.renderParam.tex = 'rail_golden';
+            }
+            b.updateTextures();
+          });
+          return [power];
+        };
+        
+      }},
       
       { id: 28, meta: 0, name: 'detector_rail', tex: {
         icon:'rail_detector',
-        render: function() {
-          var face = $('<div class="mc-face railbed"></div>');
-          face.append(m.tex('rail_detector'));
-          return face;
-        }
+        renderParam: {
+          tex:'rail_detector'
+        },
+        render: this.renderers.rail
       }, type:"customRender"},
       
       { id: 29, meta: 0, name: 'sticky_piston', tex: {
@@ -183,9 +237,26 @@ function ModMinecraft() {
         back: 'piston_bottom',
         sides: 'piston_side'
       }, canFace: 'any', type: 'facing'},
+      
+      { id: 30, meta: 0, name: 'web', tex: {
+        icon:'web',
+        renderParam: {
+          tex:'web'
+        },
+        render: this.renderers.X
+      }, type:"customRender"},
+      
+      { id: 31, meta: 0, name: 'shrub', tex: {
+        icon:'deadbush',
+        renderParam: {
+          tex:'deadbush',
+          ground:'grass_top_green'
+        },
+        render: this.renderers.X
+      }, type:"customRender"},
     ];
-    for(var i in blocks) {
-      var blockObj = blocks[i];
+    for(var i in this.blocksTemplates) {
+      var blockObj = this.blocksTemplates[i];
       var b = this.basicBlock(blockObj);
       reg.registerBlock(b);
     }

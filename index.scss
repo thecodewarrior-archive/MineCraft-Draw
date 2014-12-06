@@ -196,6 +196,10 @@
   color:#E6E6E6;
 }
 
+.context-item-active {
+  text-shadow: 0 0 0.3em #F00;
+}
+
 .notransition {
   -webkit-transition: none !important;
   -moz-transition: none !important;
@@ -400,12 +404,18 @@ $face-size: 16px;
   background: rgba(255, 0, 0, 0.4);
 }
 
-.north:hover:after  { content: "N"; }
-.south:hover:after  { content: "S"; }
-.east:hover:after   { content: "E"; }
-.west:hover:after   { content: "W"; }
-.top:hover:after    { content: "T"; }
-.bottom:hover:after { content: "B"; }
+@mixin hover-side {
+  position:absolute;
+  width:16px;
+  height:16px;
+}
+
+.north:hover:after  { @include hover-side; content: "N"; }
+.south:hover:after  { @include hover-side; content: "S"; }
+.east:hover:after   { @include hover-side; content: "E"; }
+.west:hover:after   { @include hover-side; content: "W"; }
+.top:hover:after    { @include hover-side; content: "T"; }
+.bottom:hover:after { @include hover-side; content: "B"; }
 
 #cube .top  {
   @include transform(rotateX(90deg) translateZ($face-size/2));

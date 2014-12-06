@@ -61,6 +61,10 @@ function Block(id, meta, init) {
     return [];
   }
   
+  this.updateTextures = function() {
+    window.main.updateTextures(this.x, this.y, this.z);
+  }
+  
   init(this);
   
   this.getExtraContextElements = this.getContextElements;
@@ -161,6 +165,7 @@ Block.build = function( obj ) {
   }
 
   return new Block(obj.id, obj.meta, function(b) {
+    b.paramObj = obj;
     b.getTexture = function(side) {
       if(typeof obj['fixed'] !== "undefined") {
         
@@ -377,7 +382,10 @@ Block.build = function( obj ) {
     
     if(obj['type'] === 'customRender') {
       b.hasCustom3DRenderer = function() { return true; };
-      b.getCustom3DRenderer = obj['tex']['render'];
+      b.renderParam = obj['tex']['renderParam'];
+      b.getCustom3DRenderer = function() {
+        return obj['tex']['render']( obj['tex']['renderParam'] );
+      };
     }
     
     if(typeof obj.func === "function") { obj.func(b); }

@@ -11,22 +11,28 @@
 
 }
 
-.mc-face.flowerA {
+.mc-face.Xb {
   height:16px;
   width:22px;
-  @include transform(rotateX(45deg));
+  @include transform(rotateY(45deg) translateZ(-2px));
 }
 
-.mc-face.flowerB {
+.mc-face.Xa {
   height:16px;
   width:22px; 
-  @include transform(rotateX(45deg));
+  @include transform(rotateY(-45deg) translateZ(2px));
 }
 
 .mc-face.railbed {
   height:16px;
   width:16px;
-  @include transform(rotateX(-90deg) rotate(180deg) translateZ(16px/2) );
+  @include transform(rotateX(-90deg) rotate(180deg) translateZ(8px) );
+}
+
+.mc-face.ground {
+  width:16px;
+  height: 16px;
+  @include transform(rotateX(-90deg) rotate(180deg) translateZ(9px));
 }
 
 .mc-face.something {

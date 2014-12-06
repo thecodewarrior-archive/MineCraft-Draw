@@ -19,6 +19,9 @@ function World(reg) {
     this.minX = Math.min(this.minX, x);
     this.minY = Math.min(this.minY, y);
     this.minZ = Math.min(this.minZ, z); */
+    block.x = x;
+    block.y = y;
+    block.z = z;
     if( typeof this.blocks[x]    === "undefined" ) this.blocks[x]    = [];
     if( typeof this.blocks[x][y] === "undefined" ) this.blocks[x][y] = [];
     this.blocks[x][y][z] = block;

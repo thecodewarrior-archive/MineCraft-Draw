@@ -108,6 +108,7 @@ function Main() {
         cell.data('x', x);
         cell.data('y', y);
         cell.data('z', m.view.z);
+        cell.addClass('cell-coord_' + x + '_' + y + '_' + m.view.z);
         m.redrawTexture(cell);
         row.append(cell);
       }
@@ -312,10 +313,15 @@ function Main() {
   };
   
   this.updateTextures = function(x, y, z) {
+    console.log("TEXTURE. UPDATE!");
     if(this.currentLayer === z) {
-      this.redrawTexture($('.grid-cell:data(x=' + x + ', y=' + y + ')'));
+      console.log('updating grid texture');
+      var gridItem = $('.grid-cell.cell-coord_' + x + '_' + y + '_' + z + '');
+      console.log(gridItem);
+      this.redrawTexture(gridItem);
     }
     if(this.world.getBlock(x,y,z) === this.editing) {
+      console.log('updating editor texture');
       this.redrawEditorTexture();
     }
   }
