@@ -318,7 +318,7 @@
   perspective-origin: 50% 50%;
 }
 
-$face-size: 16px;
+$face-size: 32px;
 
 #cube {
   position: relative;
@@ -362,10 +362,10 @@ $face-size: 16px;
 
 @include keyframes(cube) {
   from {
-    @include transform(scale3d(2,2,2) rotateY(0deg) rotateX(25deg) );
+    @include transform(rotateY(0deg) rotateX(25deg) );
   }
   to {
-    @include transform(scale3d(2,2,2) rotateY(360deg) rotateX(25deg) );
+    @include transform(rotateY(360deg) rotateX(25deg) );
   }
 }
 
@@ -375,14 +375,19 @@ $face-size: 16px;
   width: $face-size;
   background:none;
   color: #000;
+  image-rendering: -moz-crisp-edges;         /* Firefox */
+  image-rendering:   -o-crisp-edges;         /* Opera */
+  image-rendering: -webkit-optimize-contrast;/* Webkit (non-standard naming) */
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
 }
 
 @mixin face-after {
   position:absolute;
   left:0;
   top:0;
-  width: 16px;
-  height: 16px;
+  width: $face-size;
+  height: $face-size;
   content: "";
 }
 

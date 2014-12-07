@@ -154,9 +154,14 @@ Block.facing_map[Coord.DOWN][Coord.DOWN]  = Block.FRONT;
 
 
 Block.build = function( obj ) {
-  var texF = function() {
+  var texF = function(_, ctx) {
     var r = $('<img></img>');
     r.attr('src', Main.root + "assets/unknown.png");
+    r.load(function() {
+      if(typeof ctx !== "undefined") {
+        ctx.drawImage(this, 0, 0);
+      }
+    });
     return r;
   }
   
@@ -165,27 +170,30 @@ Block.build = function( obj ) {
   }
 
   return new Block(obj.id, obj.meta, function(b) {
+    b._tex = obj['tex']();
     b.paramObj = obj;
-    b.getTexture = function(side) {
-      if(typeof obj['fixed'] !== "undefined") {
+    b.getTexture = function(side, ctx) {
+      var canvas = (typeof ctx !== "undefined");
+      
+      if(typeof b._tex['fixed'] !== "undefined") {
         
-        if(typeof obj['fixed']['top'] !== "undefined" && side === Coord.UP) {
-          return texF(obj['fixed']['top']);
+        if(typeof b._tex['fixed']['top'] !== "undefined" && side === Coord.UP) {
+          return texF(obj['fixed']['top'], ctx);
         }
-        if(typeof obj['fixed']['bottom'] !== "undefined" && side === Coord.DOWN) {
-          return texF(obj['fixed']['bottom']);
+        if(typeof b._tex['fixed']['bottom'] !== "undefined" && side === Coord.DOWN) {
+          return texF(obj['fixed']['bottom'], ctx);
         }
-        if(typeof obj['fixed']['north'] !== "undefined" && side === Coord.NORTH) {
-          return texF(obj['fixed']['north']);
+        if(typeof b._tex['fixed']['north'] !== "undefined" && side === Coord.NORTH) {
+          return texF(obj['fixed']['north'], ctx);
         }
-        if(typeof obj['fixed']['south'] !== "undefined" && side === Coord.SOUTH) {
-          return texF(obj['fixed']['south']);
+        if(typeof b._tex['fixed']['south'] !== "undefined" && side === Coord.SOUTH) {
+          return texF(obj['fixed']['south'], ctx);
         }
-        if(typeof obj['fixed']['east'] !== "undefined" && side === Coord.EAST) {
-          return texF(obj['fixed']['east']);
+        if(typeof b._tex['fixed']['east'] !== "undefined" && side === Coord.EAST) {
+          return texF(obj['fixed']['east'], ctx);
         }
-        if(typeof obj['fixed']['west'] !== "undefined" && side === Coord.WEST) {
-          return texF(obj['fixed']['west']);
+        if(typeof b._tex['fixed']['west'] !== "undefined" && side === Coord.WEST) {
+          return texF(b._tex['fixed']['west'], ctx);
         }
         
       }
@@ -195,30 +203,28 @@ Block.build = function( obj ) {
         var f = b.sideFacing(side);
 
         if(f === Block.FRONT) {
-          return texF(obj['tex']['front']);
+          return texF(b._tex['front'], ctx);
         }
         if(f === Block.LEFT || f === Block.RIGHT || f === Block.TOP || f === Block.BOTTOM) {
           var t = "";
-          if(typeof obj['tex']['left'] !== "undefined" && f === Block.LEFT) {
-            t = obj['tex']['left'];
-          } else if(typeof obj['tex']['right'] !== "undefined" && f === Block.RIGHT) {
-            t = obj['tex']['right'];
-          } else if(typeof obj['tex']['top'] !== "undefined" && f === Block.TOP) {
-            t = obj['tex']['top'];
-          } else if(typeof obj['tex']['bottom'] !== "undefined" && f === Block.BOTTOM) {
-            t = obj['tex']['bottom'];
+          if(typeof b._tex['left'] !== "undefined" && f === Block.LEFT) {
+            t = b._tex['left'];
+          } else if(typeof b._tex['right'] !== "undefined" && f === Block.RIGHT) {
+            t = b._tex['right'];
+          } else if(typeof b._tex['top'] !== "undefined" && f === Block.TOP) {
+            t = b._tex['top'];
+          } else if(typeof b._tex['bottom'] !== "undefined" && f === Block.BOTTOM) {
+            t = b._tex['bottom'];
           } else {
-            if(typeof obj['tex']['sides'] === "undefined") {
-              t = obj['tex']['side']
+            if(typeof b._tex['sides'] === "undefined") {
+              t = b._tex['side']
             } else {
-              t = obj['tex']['sides'];
+              t = b._tex['sides'];
             }
           }
-          
-          t = texF(t);
-          
+                    
           var rot = 0;
-          if(obj['tex']['level'] === true) {
+          if(b._tex['level'] === true) {
             // region Face Rotate
             
             // endregion
@@ -284,14 +290,19 @@ Block.build = function( obj ) {
             }
             // endregion
           }
-          t.css('-webkit-transform', 'rotate(' + rot + 'deg)');
-          t.css(   '-moz-transform', 'rotate(' + rot + 'deg)');
-          t.css(     '-o-transform', 'rotate(' + rot + 'deg)');
-          t.css(        'transform', 'rotate(' + rot + 'deg)');
-          return t;
+          if(canvas) {
+            texF(t, ctx, {rot:rot})
+          } else {
+            t = texF(t);
+            t.css('-webkit-transform', 'rotate(' + rot + 'deg)');
+            t.css(   '-moz-transform', 'rotate(' + rot + 'deg)');
+            t.css(     '-o-transform', 'rotate(' + rot + 'deg)');
+            t.css(        'transform', 'rotate(' + rot + 'deg)');
+            return t;
+          }
         }
         if(f === Block.BACK) {
-          return texF(obj['tex']['back']);
+          return texF(b._tex['back'], ctx);
         }
         // endregion
       
@@ -299,22 +310,22 @@ Block.build = function( obj ) {
         
         // region Static
         if(side === Coord.UP   ) {
-          return texF(obj['tex']['top']);
+          return texF(b._tex['top'], ctx);
         }
         if(side === Coord.DOWN ) {
-          return texF(obj['tex']['bottom']);
+          return texF(b._tex['bottom'], ctx);
         }
         if(side === Coord.NORTH) {
-          return texF(obj['tex']['north']);
+          return texF(b._tex['north'], ctx);
         }
         if(side === Coord.SOUTH) {
-          return texF(obj['tex']['south']);
+          return texF(b._tex['south'], ctx);
         }
         if(side === Coord.EAST ) {
-          return texF(obj['tex']['east']);
+          return texF(b._tex['east'], ctx);
         }
         if(side === Coord.WEST ) {
-          return texF(obj['tex']['west']);
+          return texF(b._tex['west'], ctx);
         }
         // endregion
       
@@ -322,27 +333,27 @@ Block.build = function( obj ) {
         
         // region Side-Top-Bottom
         if(Coord.isTop(side)) {
-          return texF(obj['tex']['top']);
+          return texF(b._tex['top'], ctx);
         }
         if(Coord.isSide(side)) {
-          var t = obj['tex']['sides'];
-          if(typeof obj['tex']['sides'] === "undefined") {
-            t = obj['tex']['side']
+          var t = b._tex['sides'];
+          if(typeof b._tex['sides'] === "undefined") {
+            t = b._tex['side']
           }
-          return texF(t);
+          return texF(t, ctx);
         }
         if(Coord.isBottom(side)) {
-          return texF(obj['tex']['bottom']);
+          return texF(b._tex['bottom'], ctx);
         }
         // endregion
         
       } else if (obj['type'] === 'customRender') {
-        return texF(obj['tex']['icon']);
+        return texF(b._tex['icon'], ctx);
       } else {
         
         // region Basic
         
-        return texF(obj['tex']);
+        return texF(b._tex, ctx);
         
         // endregion
       }
@@ -382,9 +393,9 @@ Block.build = function( obj ) {
     
     if(obj['type'] === 'customRender') {
       b.hasCustom3DRenderer = function() { return true; };
-      b.renderParam = obj['tex']['renderParam'];
-      b.getCustom3DRenderer = function() {
-        return obj['tex']['render']( obj['tex']['renderParam'] );
+      b.renderParam = b._tex['renderParam'];
+      b.getCustom3DRenderer = function(prev) {
+        return b._tex['render']( b._tex['renderParam'], prev );
       };
     }
     

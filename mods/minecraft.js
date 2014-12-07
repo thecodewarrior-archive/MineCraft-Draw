@@ -9,9 +9,26 @@ function ModMinecraft() {
     }
   }
   
-  this.tex = function(name, type) {
+  this.tex = function(name, ctx, other) {
+    if(typeof other === "undefined") { other = {}; }
     var elem = $('<img></img>');
     elem.attr('src', m.r(name));
+    elem.load(function() {
+      if(typeof ctx !== "undefined") {
+        var degToRad = Math.PI/180;
+        if(typeof other.rot !== "undefined") {
+          ctx.translate(ctx.width/2, ctx.height/2);
+          ctx.rotate(other.rot*degToRad);
+          ctx.translate(-ctx.width/2, -ctx.height/2);
+        }
+        ctx.drawImage(this,-this.clientWidth/2,-this.clientHeight/2);
+        if(typeof other.rot !== "undefined") {
+          ctx.translate(ctx.width/2, ctx.height/2);
+          ctx.rotate(-other.rot*degToRad);
+          ctx.translate(-ctx.width/2, -ctx.height/2);
+        }
+      }
+    });
     return elem;
   };
   
@@ -25,10 +42,10 @@ function ModMinecraft() {
   };
   
   this.renderers = {
-    rail: function(obj) {
+    rail: function(obj, preview) {
       var railbed = $('<div class="mc-face railbed"></div>');
       railbed.append(m.tex(obj['tex']));
-      var set = railbed.add(m.renderers.ground(obj));
+      var set = railbed.add(m.renderers.ground(obj, preview));
       return set;
     },
     X: function(obj) {
@@ -39,7 +56,8 @@ function ModMinecraft() {
       var set = one.add(two).add(m.renderers.ground(obj));
       return set;
     },
-    ground: function(obj) {
+    ground: function(obj, preview) {
+      if(!preview) { return }
       var ground = $('<div class="mc-face ground"></div>');
       var gnd = obj['ground'];
       if(typeof obj['ground'] === "undefined") {
@@ -52,155 +70,155 @@ function ModMinecraft() {
   
   this.init = function(reg) {
     /** 
-      Basic  { id: 0, meta: 0, name: 'stone', tex: 'stone', (func: function(b) {}) }
+      Basic  { id: 0, meta: 0, name: 'stone', tex: function() { return 'stone';}, (func: function(b) {}) }
       
-      Static { id: 0, meta: 0, name: 'stone', tex: {
+      Static { id: 0, meta: 0, name: 'stone', tex: function() { return {
         top:    'loc',
         bottom: 'loc',
         north:  'loc',
         south:  'loc',
         east:   'loc',
         west:   'loc'
-      }, type: 'static', (func: function(b) {}) }
+      };}, type: 'static', (func: function(b) {}) }
       
-      Sides-Top-Bottom { id: 0, meta: 0, name: 'stone', tex: {
+      Sides-Top-Bottom { id: 0, meta: 0, name: 'stone', tex: function() { return {
         top:    'loc',
         sides:  'loc',
         bottom: 'loc'
-      }, type: 'stb', (func: function(b) {}) }
+      };}, type: 'stb', (func: function(b) {}) }
       
-      Facing { id: 0, meta: 0, name: 'stone', tex: {
+      Facing { id: 0, meta: 0, name: 'stone', tex: function() { return {
         front: 'loc',
         back: 'loc',
         side(s): 'loc',
         ( left/right/top/bottom: 'loc' )
-      }, type: 'facing', (func: function(b) {}) }
+      };}, type: 'facing', (func: function(b) {}) }
       
-      Custom Render: { id: 0, meta: 0, name: 'stone', tex: {
+      Custom Render: { id: 0, meta: 0, name: 'stone', tex: function() { return {
         icon:'stone',
         renderParam: {
           tex:'stone'
         },
         render: this.renderers.something
-      }, type:"customRender"},
+      };}, type:"customRender"},
       
       any can have a fixed: attr with top, bottom, north, south, east, west properties containing locations of those faces
       any can have validDirections property, which is the string 'any' or an array conaining up to one of each of the following
         'up', 'down', 'north', 'south', 'east', 'west', they can be in any order, but must be in same case
       */
     this.blocksTemplates = [
-      { id: 1, meta: 0, name: 'stone', tex: 'stone' },
-      { id: 1, meta: 1, name: 'granite', tex: 'stone_granite' },
-      { id: 1, meta: 2, name: 'granite_smooth', tex: 'stone_granite_smooth' },
-      { id: 1, meta: 3, name: 'diorite', tex: 'stone_diorite' },
-      { id: 1, meta: 4, name: 'diorite_smooth', tex: 'stone_diorite_smooth' },
-      { id: 1, meta: 5, name: 'andesite', tex: 'stone_andesite' },
-      { id: 1, meta: 6, name: 'andesite_smooth', tex: 'stone_andesite_smooth' },
+      { id: 1, meta: 0, name: 'stone', tex: function() { return 'stone';} },
+      { id: 1, meta: 1, name: 'granite', tex: function() { return 'stone_granite';} },
+      { id: 1, meta: 2, name: 'granite_smooth', tex: function() { return 'stone_granite_smooth';} },
+      { id: 1, meta: 3, name: 'diorite', tex: function() { return 'stone_diorite';} },
+      { id: 1, meta: 4, name: 'diorite_smooth', tex: function() { return 'stone_diorite_smooth';} },
+      { id: 1, meta: 5, name: 'andesite', tex: function() { return 'stone_andesite';} },
+      { id: 1, meta: 6, name: 'andesite_smooth', tex: function() { return 'stone_andesite_smooth';} },
       
-      { id: 2, meta: 0, name: 'grass', tex: {
+      { id: 2, meta: 0, name: 'grass', tex: function() { return {
         top:    'grass_top_green',
         sides:  'grass_side',
         bottom: 'dirt'
-      }, type: 'stb'},
-      { id: 3, meta: 0, name: 'dirt', tex: 'dirt' },
-      { id: 3, meta: 1, name: 'coarse_dirt', tex: 'coarse_dirt' },
-      { id: 3, meta: 2, name: 'podzol', tex: {
+      };}, type: 'stb'},
+      { id: 3, meta: 0, name: 'dirt', tex: function() { return 'dirt';} },
+      { id: 3, meta: 1, name: 'coarse_dirt', tex: function() { return 'coarse_dirt';} },
+      { id: 3, meta: 2, name: 'podzol', tex: function() { return {
         top:    'dirt_podzol_top',
         sides:  'dirt_podzol_side',
         bottom: 'dirt'
-      }, type: 'stb'},
-      { id: 4, meta: 0, name: 'cobblestone', tex: 'cobblestone' },
+      };}, type: 'stb'},
+      { id: 4, meta: 0, name: 'cobblestone', tex: function() { return 'cobblestone';} },
       
-      { id: 5, meta: 0, name: 'oak_planks', tex: 'planks_oak' },
-      { id: 5, meta: 1, name: 'spruce_planks', tex: 'planks_spruce' },
-      { id: 5, meta: 2, name: 'birch_planks', tex: 'planks_birch' },
-      { id: 5, meta: 3, name: 'jungle_planks', tex: 'planks_jungle' },
-      { id: 5, meta: 4, name: 'acacia_planks', tex: 'planks_acacia' },
-      { id: 5, meta: 5, name: 'dark_oak_planks', tex: 'planks_big_oak' },
+      { id: 5, meta: 0, name: 'oak_planks', tex: function() { return 'planks_oak';} },
+      { id: 5, meta: 1, name: 'spruce_planks', tex: function() { return 'planks_spruce';} },
+      { id: 5, meta: 2, name: 'birch_planks', tex: function() { return 'planks_birch';} },
+      { id: 5, meta: 3, name: 'jungle_planks', tex: function() { return 'planks_jungle';} },
+      { id: 5, meta: 4, name: 'acacia_planks', tex: function() { return 'planks_acacia';} },
+      { id: 5, meta: 5, name: 'dark_oak_planks', tex: function() { return 'planks_big_oak';} },
       
-      { id: 7, meta: 0, name: 'bedrock', tex: 'bedrock' },
+      { id: 7, meta: 0, name: 'bedrock', tex: function() { return 'bedrock';} },
       
-      { id: 8, meta: 0, name: 'flowing_water', tex: 'water' },
-      { id: 9, meta: 0, name: 'still_water', tex: 'water' },
-      { id: 10, meta: 0, name: 'flowing_lava', tex: 'lava' },
-      { id: 11, meta: 0, name: 'still_lava', tex: 'lava' },
+      { id: 8, meta: 0, name: 'flowing_water', tex: function() { return 'water';} },
+      { id: 9, meta: 0, name: 'still_water', tex: function() { return 'water';} },
+      { id: 10, meta: 0, name: 'flowing_lava', tex: function() { return 'lava';} },
+      { id: 11, meta: 0, name: 'still_lava', tex: function() { return 'lava';} },
       
-      { id: 12, meta: 0, name: 'sand', tex: 'sand' },
-      { id: 12, meta: 1, name: 'red_sand', tex: 'red_sand' },
-      { id: 13, meta: 0, name: 'gravel', tex: 'gravel' },
+      { id: 12, meta: 0, name: 'sand', tex: function() { return 'sand';} },
+      { id: 12, meta: 1, name: 'red_sand', tex: function() { return 'red_sand';} },
+      { id: 13, meta: 0, name: 'gravel', tex: function() { return 'gravel';} },
       
-      { id: 14, meta: 0, name: 'gold_ore', tex: 'gold_ore' },
-      { id: 15, meta: 0, name: 'iron_ore', tex: 'iron_ore' },
-      { id: 16, meta: 0, name: 'coal_ore', tex: 'coal_ore' },
+      { id: 14, meta: 0, name: 'gold_ore', tex: function() { return 'gold_ore';} },
+      { id: 15, meta: 0, name: 'iron_ore', tex: function() { return 'iron_ore';} },
+      { id: 16, meta: 0, name: 'coal_ore', tex: function() { return 'coal_ore';} },
       
-      { id: 17, meta: 0, name: 'oak_log', tex: {
+      { id: 17, meta: 0, name: 'oak_log', tex: function() { return {
         top:    'log_oak_top',
         sides:  'log_oak',
         bottom: 'log_oak_top'
-      }, type: 'stb' },
-      { id: 17, meta: 1, name: 'spruce_log', tex: {
+      };}, type: 'stb' },
+      { id: 17, meta: 1, name: 'spruce_log', tex: function() { return {
         top:    'log_spruce_top',
         sides:  'log_spruce',
         bottom: 'log_spruce_top'
-      }, type: 'stb' },
-      { id: 17, meta: 2, name: 'birch_log', tex: {
+      };}, type: 'stb' },
+      { id: 17, meta: 2, name: 'birch_log', tex: function() { return {
         top:    'log_birch_top',
         sides:  'log_birch',
         bottom: 'log_birch_top'
-      }, type: 'stb' },
-      { id: 17, meta: 3, name: 'jungle_log', tex: {
+      };}, type: 'stb' },
+      { id: 17, meta: 3, name: 'jungle_log', tex: function() { return {
         top:    'log_jungle_top',
         sides:  'log_jungle',
         bottom: 'log_jungle_top'
-      }, type: 'stb' },
+      };}, type: 'stb' },
       
-      { id: 18, meta: 0, name: 'oak_leaves', tex: 'leaves_oak_green' },
-      { id: 18, meta: 1, name: 'spruce_leaves', tex: 'leaves_spruce_green' },
-      { id: 18, meta: 2, name: 'birch_leaves', tex: 'leaves_birch_green' },
-      { id: 18, meta: 3, name: 'jungle_leaves', tex: 'leaves_jungle_green' },
+      { id: 18, meta: 0, name: 'oak_leaves', tex: function() { return 'leaves_oak_green';} },
+      { id: 18, meta: 1, name: 'spruce_leaves', tex: function() { return 'leaves_spruce_green';} },
+      { id: 18, meta: 2, name: 'birch_leaves', tex: function() { return 'leaves_birch_green';} },
+      { id: 18, meta: 3, name: 'jungle_leaves', tex: function() { return 'leaves_jungle_green';} },
       
-      { id: 19, meta: 0, name: 'sponge', tex: 'sponge' },
-      { id: 19, meta: 1, name: 'wet_sponge', tex: 'sponge_wet' },
+      { id: 19, meta: 0, name: 'sponge', tex: function() { return 'sponge';} },
+      { id: 19, meta: 1, name: 'wet_sponge', tex: function() { return 'sponge_wet';} },
       
-      { id: 20, meta: 0, name: 'glass', tex: 'glass' },
+      { id: 20, meta: 0, name: 'glass', tex: function() { return 'glass';} },
       
-      { id: 21, meta: 0, name: 'lapis_ore', tex: 'lapis_ore' },
-      { id: 22, meta: 0, name: 'lapis_block', tex: 'lapis_block' },
+      { id: 21, meta: 0, name: 'lapis_ore', tex: function() { return 'lapis_ore';} },
+      { id: 22, meta: 0, name: 'lapis_block', tex: function() { return 'lapis_block';} },
       
-      { id: 23, meta: 0, name: 'dispenser', tex: {
+      { id: 23, meta: 0, name: 'dispenser', tex: function() { return {
         front: 'dispenser_front_horizontal',
         back: 'furnace_side',
         sides: 'furnace_side',
         top: 'furnace_top',
         bottom: 'furnace_top',
         level: true
-      }, canFace: 'any', type: 'facing' },
+      };}, canFace: 'any', type: 'facing' },
       
-      { id: 24, meta: 0, name: 'sandstone', tex: {
+      { id: 24, meta: 0, name: 'sandstone', tex: function() { return {
         top:    'sandstone_top',
         sides:  'sandstone_normal',
         bottom: 'sandstone_bottom'
-      }, type: 'stb' },
-      { id: 24, meta: 1, name: 'chiseled_sandstone', tex: {
+      };}, type: 'stb' },
+      { id: 24, meta: 1, name: 'chiseled_sandstone', tex: function() { return {
         top:    'sandstone_top',
         sides:  'sandstone_carved',
         bottom: 'sandstone_bottom'
-      }, type: 'stb' },
-      { id: 24, meta: 2, name: 'smooth_sandstone', tex: {
+      };}, type: 'stb' },
+      { id: 24, meta: 2, name: 'smooth_sandstone', tex: function() { return {
         top:    'sandstone_top',
         sides:  'sandstone_smooth',
         bottom: 'sandstone_top'
-      }, type: 'stb' },
+      };}, type: 'stb' },
       
-      { id: 25, meta: 0, name: 'noteblock', tex: 'noteblock' },
+      { id: 25, meta: 0, name: 'noteblock', tex: function() { return 'noteblock';} },
       
-      { id: 27, meta: 0, name: 'powered_rail', tex: {
+      { id: 27, meta: 0, name: 'powered_rail', tex: function() { return {
         icon:'rail_golden',
         renderParam: {
           tex: 'rail_golden'
         },
-        render: this.renderers.rail
-      }, type:"customRender", func: function(b) {
+        render: m.renderers.rail
+      };}, type:"customRender", func: function(b) {
         b.getContextElements = function() {
           var power = $('<i></i>');
           power.addClass('fa');
@@ -210,11 +228,11 @@ function ModMinecraft() {
             power.addClass('context-item-active');
           }
           power.click(function() {
-            if(b.paramObj.tex.icon === 'rail_golden') {
-              b.paramObj.tex.icon = 'rail_golden_powered';
+            if(b._tex.icon === 'rail_golden') {
+              b._tex.icon = 'rail_golden_powered';
               b.renderParam.tex = 'rail_golden_powered';
             } else {
-              b.paramObj.tex.icon = 'rail_golden';
+              b._tex.icon = 'rail_golden';
               b.renderParam.tex = 'rail_golden';
             }
             b.updateTextures();
@@ -224,36 +242,36 @@ function ModMinecraft() {
         
       }},
       
-      { id: 28, meta: 0, name: 'detector_rail', tex: {
+      { id: 28, meta: 0, name: 'detector_rail', tex: function() { return {
         icon:'rail_detector',
         renderParam: {
           tex:'rail_detector'
         },
-        render: this.renderers.rail
-      }, type:"customRender"},
+        render: m.renderers.rail
+      };}, type:"customRender"},
       
-      { id: 29, meta: 0, name: 'sticky_piston', tex: {
+      { id: 29, meta: 0, name: 'sticky_piston', tex: function() { return {
         front: 'piston_top_sticky',
         back: 'piston_bottom',
         sides: 'piston_side'
-      }, canFace: 'any', type: 'facing'},
+      };}, canFace: 'any', type: 'facing'},
       
-      { id: 30, meta: 0, name: 'web', tex: {
+      { id: 30, meta: 0, name: 'web', tex: function() { return {
         icon:'web',
         renderParam: {
           tex:'web'
         },
-        render: this.renderers.X
-      }, type:"customRender"},
+        render: m.renderers.X
+      };}, type:"customRender"},
       
-      { id: 31, meta: 0, name: 'shrub', tex: {
+      { id: 31, meta: 0, name: 'shrub', tex: function() { return {
         icon:'deadbush',
         renderParam: {
           tex:'deadbush',
           ground:'grass_top_green'
         },
-        render: this.renderers.X
-      }, type:"customRender"},
+        render: m.renderers.X
+      };}, type:"customRender"},
     ];
     for(var i in this.blocksTemplates) {
       var blockObj = this.blocksTemplates[i];

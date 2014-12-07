@@ -37,14 +37,33 @@ function Main() {
     $('#cube .face').html('');
     $('#cube .custom').html('');
     if(b.hasCustom3DRenderer()) {
-      $('#cube .custom').html(b.getCustom3DRenderer());
+      $('#cube .custom').html(b.getCustom3DRenderer(true));
     } else {
-      $('#cube .face.north' ).html(b.getTexture(Coord.NORTH));
-      $('#cube .face.south' ).html(b.getTexture(Coord.SOUTH));
-      $('#cube .face.east'  ).html(b.getTexture(Coord.EAST ));
-      $('#cube .face.west'  ).html(b.getTexture(Coord.WEST ));
-      $('#cube .face.top'   ).html(b.getTexture(Coord.UP   ));
-      $('#cube .face.bottom').html(b.getTexture(Coord.DOWN ));
+      var ctx;
+      
+      ctx = $('#cube .face.north' )[0].getContext('2d');
+      ctx.clearRect ( 0 , 0 , ctx.width, ctx.height );
+      b.getTexture(Coord.NORTH, ctx);
+      
+      ctx = $('#cube .face.south' )[0].getContext('2d');
+      ctx.clearRect ( 0 , 0 , ctx.width, ctx.height );
+      b.getTexture(Coord.SOUTH, ctx);
+      
+      ctx = $('#cube .face.east'  )[0].getContext('2d');
+      ctx.clearRect ( 0 , 0 , ctx.width, ctx.height );
+      b.getTexture(Coord.EAST , ctx);
+      
+      ctx = $('#cube .face.west'  )[0].getContext('2d');
+      ctx.clearRect ( 0 , 0 , ctx.width, ctx.height );
+      b.getTexture(Coord.WEST , ctx);
+      
+      ctx = $('#cube .face.top'   )[0].getContext('2d');
+      ctx.clearRect ( 0 , 0 , ctx.width, ctx.height );
+      b.getTexture(Coord.UP   , ctx);
+      
+      ctx = $('#cube .face.bottom')[0].getContext('2d');
+      ctx.clearRect ( 0 , 0 , ctx.width, ctx.height );
+      b.getTexture(Coord.DOWN , ctx);
     }
     
   }
