@@ -1,4 +1,38 @@
 
+@mixin transform($trans) {
+  -webkit-transform: $trans;
+     -moz-transform: $trans;
+      -ms-transform: $trans;
+       -o-transform: $trans;
+          transform: $trans;
+}
+
+@mixin keyframes($name) {
+    @-webkit-keyframes #{$name} {
+        @content;
+    }
+  
+    @-moz-keyframes #{$name} {
+        @content;
+    }
+
+    @-o-keyframes #{$name} {
+        @content;
+    }
+
+    @keyframes #{$name} {
+        @content;
+    }
+}
+
+@mixin crisp-images {
+  image-rendering: -moz-crisp-edges;         /* Firefox */
+  image-rendering:   -o-crisp-edges;         /* Opera */
+  image-rendering:      crisp-edges;
+  image-rendering: -webkit-optimize-contrast;/* Webkit (non-standard naming) */
+  -ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
+}
+
 #hotbar {
   border: 1px solid black;
   border-right:none;
@@ -19,13 +53,11 @@
 }
 
 .selector-row {
-  height:16px;
+  height:16em;
   
 }
 
 .selector-item, .selector-item-air {
-  height:16px;
-  width:16px;
   border-right: 1px solid black;
   border-bottom: 1px solid black;
   margin:0;
@@ -103,10 +135,11 @@
   border-top: 1px solid black;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+   -khtml-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  font-size:1px;
 }
 
 .grid-row {
@@ -129,14 +162,14 @@
 }
 
 .grid-cell.center {
-  padding-top:-5px;
+  padding-top:-5px; 
 }
 
 .grid-cell {
   display:inline-block;
   float:left;
-  width:16px;
-  height: 16px;
+  width:16em;
+  height:16em;
   border-right: 1px solid black;
   border-bottom: 1px solid black;
 }
@@ -144,10 +177,10 @@
 .noselect {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+   -khtml-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .context-wrapper {
@@ -165,10 +198,10 @@
   border-radius: 50%;
   -webkit-transform: rotate(180deg);
   -webkit-transition:all ease-in-out 0.6s;
-  -moz-transition:all ease-in-out 0.6s;
-  -ms-transition:all ease-in-out 0.6s;
-  -o-transition:all ease-in-out 0.6s;
-  transition:all ease-in-out 0.6s;
+     -moz-transition:all ease-in-out 0.6s;
+      -ms-transition:all ease-in-out 0.6s;
+       -o-transition:all ease-in-out 0.6s;
+          transition:all ease-in-out 0.6s;
 }
 
 .context.on {
@@ -300,14 +333,6 @@
   vertical-align: middle;
 }
 
-@mixin transform($trans) {
-  -webkit-transform: $trans;
-     -moz-transform: $trans;
-      -ms-transform: $trans;
-       -o-transform: $trans;
-          transform: $trans;
-}
-
 #experiment {
   margin:18px auto;
   -webkit-perspective: 400px;
@@ -318,7 +343,6 @@
   perspective-origin: 50% 50%;
 }
 
-$face-size: 16px;
 
 #cube {
   position: relative;
@@ -332,6 +356,16 @@ $face-size: 16px;
     -moz-transform-style: preserve-3d;
          transition: transform 2s linear;
          transform-style: preserve-3d;
+  font-size:2px;
+}
+
+#cube * {
+  @include crisp-images;
+}
+
+#cube .full {
+  width:16em;
+  height:16em;
 }
 
 #cube.spin {
@@ -342,37 +376,17 @@ $face-size: 16px;
           animation: cube 10s linear 0s infinite;
 }
 
-@mixin keyframes($name) {
-    @-webkit-keyframes #{$name} {
-        @content;
-    }
-  
-    @-moz-keyframes #{$name} {
-        @content;
-    }
-  
-    @-o-keyframes #{$name} {
-        @content;
-    }
-
-    @keyframes #{$name} {
-        @content;
-    }
-}
-
 @include keyframes(cube) {
   from {
-    @include transform(scale3d(2,2,2) rotateY(0deg) rotateX(25deg) );
+    @include transform(rotateY(0deg) rotateX(25deg) );
   }
   to {
-    @include transform(scale3d(2,2,2) rotateY(360deg) rotateX(25deg) );
+    @include transform(rotateY(360deg) rotateX(25deg) );
   }
 }
 
 .face {
   position: absolute;
-  height: $face-size;
-  width: $face-size;
   background:none;
   color: #000;
 }
@@ -381,8 +395,8 @@ $face-size: 16px;
   position:absolute;
   left:0;
   top:0;
-  width: 16px;
-  height: 16px;
+  width: 16em;
+  height: 16em;
   content: "";
 }
 
@@ -418,27 +432,27 @@ $face-size: 16px;
 .bottom:hover:after { @include hover-side; content: "B"; }
 
 #cube .top  {
-  @include transform(rotateX(90deg) translateZ($face-size/2));
+  @include transform(rotateX(90deg) translateZ(8em));
 }
 
 #cube .south {
-  @include transform(translateZ($face-size/2));
+  @include transform(translateZ(8em));
 }
 
 #cube .east {
-  @include transform(rotateY(90deg) translateZ($face-size/2));
+  @include transform(rotateY(90deg) translateZ(8em));
 }
 
 #cube .north {
-  @include transform(rotateY(180deg) translateZ($face-size/2));
+  @include transform(rotateY(180deg) translateZ(8em));
 }
 
 #cube .west {
-  @include transform(rotateY(-90deg) translateZ($face-size/2));
+  @include transform(rotateY(-90deg) translateZ(8em));
 }
 
 #cube .bottom {
-  @include transform(rotateX(-90deg) rotate(180deg) translateZ($face-size/2));
+  @include transform(rotateX(-90deg) rotate(180deg) translateZ(8em));
 }
 
 #start-facing-select {
@@ -464,3 +478,4 @@ $face-size: 16px;
   padding-top: 0.15em;
   margin:0 auto;
 }
+

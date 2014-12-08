@@ -11,6 +11,7 @@ function ModMinecraft() {
   
   this.tex = function(name, type) {
     var elem = $('<img></img>');
+    elem.addClass('full');
     elem.attr('src', m.r(name));
     return elem;
   };
