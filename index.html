@@ -31,21 +31,31 @@
     </div>
     
     <div class="editor-toolbar">
-      <div class="buttonset horizontal">
-        <img class="left add" src="assets/button_left_add.png">
-        <img class="left rem" src="assets/button_left_rem.png">
+      <div id="arrows">
+        <div class="pointer goup">
+        </div>
+        <div class="pointer goleft">
+        </div>
+        <div class="pointer goright">
+        </div>
+        <div class="pointer godown">
+        </div>
+        <div class="pointer uplayer">
+        </div>
+        <div class="pointer downlayer">
+        </div>
+        <div class="z-indicator">0
+        </div>
       </div>
-      <div class="buttonset horizontal">
-        <img class="right rem" src="assets/button_right_rem.png">
-        <img class="right add" src="assets/button_right_add.png">
-      </div>
-      <div class="buttonset vertical">
-        <img class="top add" src="assets/button_top_add.png">
-        <img class="top rem" src="assets/button_top_rem.png">
-      </div>
-      <div class="buttonset vertical">
-        <img class="bottom rem" src="assets/button_bottom_rem.png">
-        <img class="bottom add" src="assets/button_bottom_add.png">
+      <div id="size-change-outer">
+        <div id="width-change-outer">
+          <i class="fa fa-arrows-h"></i>
+          <div id="width-editbox" contenteditable="true"></div>
+        </div>
+        <div id="height-change-outer">
+          <i class="fa fa-arrows-v"></i>
+          <div id="height-editbox" contenteditable="true"></div>
+        </div>
       </div>
     </div>
     

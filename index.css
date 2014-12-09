@@ -72,6 +72,9 @@
   padding: 3px;
   display: inline-block; }
 
+#editor-outer {
+  display: inline-block; }
+
 #editor {
   position: relative;
   top: 0;
@@ -89,7 +92,8 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  font-size: 1px; }
+  font-size: 1px;
+  display: inline-block; }
 
 .grid-row {
   height: 17px; }
@@ -99,7 +103,6 @@
   width: 9px;
   height: 9px;
   line-height: 0;
-  font-size: 0;
   margin-bottom: -9px;
   margin-right: -9px;
   background: url(assets/center.png); }
@@ -122,6 +125,95 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none; }
+
+#width-change-outer {
+  display: inline-block;
+  vertical-align: top; }
+
+#height-change-outer {
+  display: block; }
+
+#size-change-outer {
+  display: inline-block;
+  position: absolute;
+  top: 7px;
+  left: 72px;
+  height: 48px; }
+
+#width-change-outer .fa, #height-change-outer .fa {
+  color: #D0D0D0;
+  text-shadow: #808080 1px 1px 2px;
+  vertical-align: top;
+  text-align: center;
+  width: 1em;
+  text-align: center; }
+#width-change-outer .change, #height-change-outer .change {
+  color: #00B000; }
+#width-change-outer #height-editbox, #width-change-outer #width-editbox, #height-change-outer #height-editbox, #height-change-outer #width-editbox {
+  display: inline-block;
+  width: 5em;
+  height: 1em;
+  border-bottom: 1px solid #D0D0D0; }
+
+#axes {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: -31px; }
+
+.editor-toolbar {
+  position: relative; }
+  .editor-toolbar #arrows {
+    position: relative;
+    display: inline-block;
+    height: 48px;
+    width: 70px;
+    background: url(assets/arrows.png); }
+    .editor-toolbar #arrows .goleft, .editor-toolbar #arrows .goright, .editor-toolbar #arrows .goup, .editor-toolbar #arrows .godown,
+    .editor-toolbar #arrows .uplayer, .editor-toolbar #arrows .downlayer {
+      position: absolute;
+      height: 14px;
+      width: 14px; }
+    .editor-toolbar #arrows .goleft {
+      left: 2px;
+      top: 17px; }
+    .editor-toolbar #arrows .goright {
+      right: 16px;
+      top: 17px; }
+    .editor-toolbar #arrows .goup {
+      left: 17px;
+      top: 2px; }
+    .editor-toolbar #arrows .godown {
+      left: 17px;
+      bottom: 2px; }
+    .editor-toolbar #arrows .uplayer {
+      left: 51px;
+      top: 2px; }
+    .editor-toolbar #arrows .downlayer {
+      left: 51px;
+      bottom: 2px; }
+    .editor-toolbar #arrows .z-indicator {
+      position: absolute;
+      height: 12px;
+      width: 18px;
+      font-size: 11px;
+      top: 18px;
+      left: 49px;
+      text-align: center; }
+
+#grid * {
+  image-rendering: -moz-crisp-edges;
+  /* Firefox */
+  image-rendering: -o-crisp-edges;
+  /* Opera */
+  image-rendering: crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  /* Webkit (non-standard naming) */
+  -ms-interpolation-mode: nearest-neighbor;
+  /* IE (non-standard property) */ }
+
+#grid .full {
+  width: 16em;
+  height: 16em; }
 
 .context-wrapper {
   position: absolute; }
@@ -176,35 +268,6 @@
 
 .pointer {
   cursor: pointer; }
-
-#axes {
-  display: block;
-  margin-top: 10px;
-  margin-bottom: -31px; }
-
-#editor-outer {
-  display: inline-block; }
-
-.editor-toolbar {
-  margin-top: 10px;
-  height: 20px; }
-
-.buttonset {
-  float: left; }
-
-.buttonset img {
-  float: left; }
-
-.buttonset.horizontal {
-  height: 13px;
-  width: 18px;
-  margin-right: 2px;
-  margin-top: 2px; }
-
-.buttonset.vertical {
-  height: 20px;
-  width: 13px;
-  margin-right: 2px; }
 
 .edit-pane {
   display: none;

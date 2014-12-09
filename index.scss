@@ -33,6 +33,8 @@
   -ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
 }
 
+// region selector
+
 #hotbar {
   border: 1px solid black;
   border-right:none;
@@ -121,6 +123,15 @@
   display:inline-block;
 }
 
+// endregion
+
+// region editor
+
+
+#editor-outer {
+  display:inline-block;
+}
+
 #editor {
   position:relative;
   top:0;
@@ -140,6 +151,7 @@
       -ms-user-select: none;
           user-select: none;
   font-size:1px;
+  display:inline-block;
 }
 
 .grid-row {
@@ -153,7 +165,7 @@
   height:9px;
   
   line-height: 0;
-  font-size: 0;
+  //font-size: 0;
   
   margin-bottom:-9px;
   margin-right: -9px;
@@ -182,6 +194,124 @@
       -ms-user-select: none;
           user-select: none;
 }
+
+#width-change-outer {
+  display:inline-block;
+  vertical-align: top;
+}
+
+#height-change-outer {
+  display:block;
+}
+
+#size-change-outer {
+  display:inline-block;
+  position:absolute;
+  top:7px;
+  left:72px;
+  height:48px;
+}
+
+#width-change-outer, #height-change-outer {
+  .fa {
+    color:#D0D0D0;
+    text-shadow:#808080 1px 1px 2px;
+    vertical-align: top;
+    text-align: center;
+    width:1em;
+    text-align: center;
+  }
+  
+  .change {
+    color:#00B000;
+  }
+  
+  #height-editbox, #width-editbox {
+    display:inline-block;
+    width:5em;
+    height:1em;
+    border-bottom:1px solid #D0D0D0;
+  }
+}
+
+#axes {
+  display:block;
+  margin-top:10px;
+  margin-bottom:-31px;
+}
+
+.editor-toolbar {
+  position:relative;
+  #arrows {
+    position: relative;
+    display:inline-block;
+    height:48px;
+    width:70px;
+    background:url(assets/arrows.png);
+    
+    .goleft, .goright, .goup, .godown,
+    .uplayer, .downlayer {
+      position:absolute;
+      height:14px;
+      width:14px;
+    }
+
+    .goleft {
+      left: 2px;
+      top: 17px;
+    }
+
+    .goright {
+      right: 16px;
+      top:  17px;
+    }
+
+    .goup {
+      left: 17px;
+      top:   2px;
+    }
+
+    .godown {
+      left:  17px;
+      bottom: 2px;
+    }
+    
+    .uplayer {
+      left:51px;
+      top:2px;
+    }
+    
+    .downlayer {
+      left:51px;
+      bottom:2px;
+    }
+    
+    .z-indicator {
+      position: absolute;
+      height:12px;
+      width:18px;
+      font-size:11px;
+      top:18px;
+      left:49px;
+      text-align: center;
+    }
+    
+  }
+  
+}
+
+#grid * {
+  @include crisp-images;
+}
+
+#grid .full {
+  width:16em;
+  height:16em;
+}
+
+// endregion
+
+// region context
 
 .context-wrapper {
   position:absolute;
@@ -245,41 +375,7 @@
   cursor:pointer;
 }
 
-#axes {
-  display:block;
-  margin-top:10px;
-  margin-bottom:-31px;
-}
-
-#editor-outer {
-  display:inline-block;
-}
-
-.editor-toolbar {
-  margin-top:10px;
-  height:20px;
-}
-
-.buttonset {
-  float:left;
-}
-
-.buttonset img {
-  float:left;
-}
-
-.buttonset.horizontal {
-  height:13px;
-  width:18px;
-  margin-right:2px;
-  margin-top:2px;
-}
-
-.buttonset.vertical {
-  height:20px;
-  width:13px;
-  margin-right:2px;
-}
+// endregion
 
 .edit-pane {
   display:none;

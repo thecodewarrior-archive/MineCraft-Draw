@@ -89,20 +89,25 @@ function Main() {
     var grid = $("#grid");
     grid.html("");
     //var m = this;
-    if(this.view.x < 0 && this.view.y < 0) {
+    if(this.view.x <= 0 && this.view.y <= 0 && this.view.x >= -this.view.h && this.view.y >= -this.view.w) {
       var center = $('<div></div>');
     
       center.addClass('center');
     
-      center.css('left', '' + (-17 * this.view.y - 5) );
-      center.css('top', '' + (-17 * this.view.x  - 5) );
+      center.css({
+        left: (-16 * this.view.y) + 'em',
+        top: (-16 * this.view.x) + 'em',
+        'margin-left': -1 * ( 5+this.view.y ) + 'px',
+        'margin-top':  -1 * ( 5+this.view.x ) + 'px',
+        'margin-bottom': -9 + (5+this.view.x) + 'px'
+      });
       grid.append(center);
     }
     
-    for(var x = this.view.x; x < (this.view.x + this.view.w); x += 1) {
+    for(var x = this.view.x; x < (this.view.x + this.view.h); x += 1) {
       var row = $('<div></div>');
       row.addClass('grid-row');
-      for(var y = this.view.y; y < (this.view.y + this.view.h); y += 1) {
+      for(var y = this.view.y; y < (this.view.y + this.view.w); y += 1) {
         var cell = $('<div></div>');
         cell.addClass('grid-cell');
         cell.data('x', x);
@@ -284,6 +289,95 @@ function Main() {
         m.registerEvents();
       }
     });
+    
+    $(".goleft").click(function() {
+      m.view.y += 1;
+      m.redrawGrid();
+    });
+    $(".goright").click(function() {
+      m.view.y -= 1;
+      m.redrawGrid();
+    });
+    $(".goup").click(function() {
+      m.view.x += 1;
+      m.redrawGrid();
+    });
+    $(".godown").click(function() {
+      m.view.x -= 1;
+      m.redrawGrid();
+    });
+    $(".uplayer").click(function() {
+      m.view.z += 1;
+      $('.z-indicator').text(m.view.z);
+      m.redrawGrid();
+    });
+    $(".downlayer").click(function() {
+      m.view.z -= 1;
+      $('.z-indicator').text(m.view.z);
+      m.redrawGrid();
+    });
+    
+    $('#height-editbox').keydown(function(event) {
+      var elem = $(this);
+      if(event.keyCode >= 48 && event.keyCode < 57 || event.keyCode === 8) {
+        var icon = elem.siblings('i');
+        icon.removeClass('fa-arrows-v');
+        icon.addClass('fa-check');
+        icon.addClass('change');
+      } else if(event.keyCode === 27) {
+        var icon = elem.siblings('i');
+        icon.removeClass('change');
+        icon.removeClass('fa-check');
+        icon.addClass('fa-arrows-v');
+        elem.text(m.view.h);
+        elem.blur();
+        event.preventDefault();
+      } else {
+        console.log('got bad key:' + event.keyCode);
+        event.preventDefault();
+      }
+      
+    });
+    
+    $('#width-editbox').keydown(function(event) {
+      var elem = $(this);
+      if(event.keyCode >= 48 && event.keyCode < 57 || event.keyCode === 8) {
+        var icon = elem.siblings('i');
+        icon.removeClass('fa-arrows-h');
+        icon.addClass('fa-check');
+        icon.addClass('change');
+      } else if(event.keyCode === 27) {
+        var icon = elem.siblings('i');
+        icon.removeClass('change');
+        icon.removeClass('fa-check');
+        icon.addClass('fa-arrows-h');
+        elem.text(m.view.w);
+        elem.blur();
+        event.preventDefault();
+      } else {
+        console.log('got bad key:' + event.keyCode);
+        event.preventDefault();
+      }
+      
+    });
+    
+    $('#width-change-outer').on('mousedown', '.change', function(evt) {
+      var elem = $(this);
+      m.view.w = parseInt(elem.siblings('#width-editbox').text());
+      m.redrawGrid();
+      elem.removeClass('change');
+      elem.removeClass('fa-check');
+      elem.addClass('fa-arrows-h');
+    });
+    
+    $('#height-change-outer').on('mousedown', '.change', function(evt) {
+      var elem = $(this);
+      m.view.h = parseInt(elem.siblings('#height-editbox').text());
+      m.redrawGrid();
+      elem.removeClass('change');
+      elem.removeClass('fa-check');
+      elem.addClass('fa-arrows-v');
+    });
   };
   
   this.registerEvents = function() {
@@ -326,6 +420,8 @@ function Main() {
     }
   }
   
+  $('#height-editbox').text(this.view.h);
+  $('#width-editbox' ).text(this.view.w);
   this.redrawGrid();
   this.redrawSelector();
   this.registerEvents();
