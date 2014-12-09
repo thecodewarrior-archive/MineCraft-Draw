@@ -1,4 +1,3 @@
-/* line 2, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 #hotbar {
   border: 1px solid black;
   border-right: none;
@@ -7,7 +6,6 @@
   margin: 0;
   padding: 0; }
 
-/* line 12, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .hotbar-item {
   border-right: 1px solid black;
   height: 16px;
@@ -16,21 +14,16 @@
   margin: 0;
   padding: 0; }
 
-/* line 21, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .selector-row {
-  height: 16px; }
+  height: 16em; }
 
-/* line 26, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .selector-item, .selector-item-air {
-  height: 16px;
-  width: 16px;
   border-right: 1px solid black;
   border-bottom: 1px solid black;
   margin: 0;
   padding: 0;
   display: inline-block; }
 
-/* line 36, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 #selector {
   border-top: 1px solid black;
   border-left: 1px solid black;
@@ -39,11 +32,9 @@
   float: left;
   display: inline-block; }
 
-/* line 45, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .selector-item.selected, .selector-item-air.selected {
   border-color: #F00; }
 
-/* line 49, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 #selector-fullwidth {
   width: 154px;
   height: 66px;
@@ -54,12 +45,10 @@
   border-top-left-radius: 6px;
   border-top-right-radius: 6px; }
 
-/* line 60, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 #selector-tabs {
   vertical-align: bottom;
   padding-left: 6px; }
 
-/* line 65, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .tab {
   background-color: #DDD;
   width: 20px;
@@ -70,13 +59,11 @@
   border-top-left-radius: 6px;
   border-top-right-radius: 6px; }
 
-/* line 77, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .tab.selected {
   height: 24px;
   width: 24px;
   background-color: #CCC; }
 
-/* line 83, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 #hotbar-border {
   border: 3px outset gray;
   border-top: none;
@@ -85,7 +72,6 @@
   padding: 3px;
   display: inline-block; }
 
-/* line 92, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 #editor {
   position: relative;
   top: 0;
@@ -94,7 +80,6 @@
   margin-left: 9px;
   float: left; }
 
-/* line 101, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 #grid {
   border-left: 1px solid black;
   border-top: 1px solid black;
@@ -103,13 +88,12 @@
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  user-select: none; }
+  user-select: none;
+  font-size: 1px; }
 
-/* line 112, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .grid-row {
   height: 17px; }
 
-/* line 116, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .center {
   position: relative;
   width: 9px;
@@ -120,20 +104,17 @@
   margin-right: -9px;
   background: url(assets/center.png); }
 
-/* line 131, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .grid-cell.center {
   padding-top: -5px; }
 
-/* line 135, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .grid-cell {
   display: inline-block;
   float: left;
-  width: 16px;
-  height: 16px;
+  width: 16em;
+  height: 16em;
   border-right: 1px solid black;
   border-bottom: 1px solid black; }
 
-/* line 144, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .noselect {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -142,11 +123,9 @@
   -ms-user-select: none;
   user-select: none; }
 
-/* line 153, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .context-wrapper {
   position: absolute; }
 
-/* line 157, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .context {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.7);
@@ -163,7 +142,6 @@
   -o-transition: all ease-in-out 0.6s;
   transition: all ease-in-out 0.6s; }
 
-/* line 174, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .context.on {
   width: 64px;
   height: 64px;
@@ -176,7 +154,6 @@
   -o-transition: all ease-in-out 0.6s;
   transition: all ease-in-out 0.6s; }
 
-/* line 187, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .context-item {
   position: absolute;
   top: 50%;
@@ -187,11 +164,9 @@
   text-align: center;
   color: #E6E6E6; }
 
-/* line 199, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .context-item-active {
   text-shadow: 0 0 0.3em #F00; }
 
-/* line 203, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .notransition {
   -webkit-transition: none !important;
   -moz-transition: none !important;
@@ -199,47 +174,38 @@
   -ms-transition: none !important;
   transition: none !important; }
 
-/* line 211, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .pointer {
   cursor: pointer; }
 
-/* line 215, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 #axes {
   display: block;
   margin-top: 10px;
   margin-bottom: -31px; }
 
-/* line 221, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 #editor-outer {
   display: inline-block; }
 
-/* line 225, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .editor-toolbar {
   margin-top: 10px;
   height: 20px; }
 
-/* line 230, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .buttonset {
   float: left; }
 
-/* line 234, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .buttonset img {
   float: left; }
 
-/* line 238, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .buttonset.horizontal {
   height: 13px;
   width: 18px;
   margin-right: 2px;
   margin-top: 2px; }
 
-/* line 245, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .buttonset.vertical {
   height: 20px;
   width: 13px;
   margin-right: 2px; }
 
-/* line 251, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .edit-pane {
   display: none;
   position: absolute;
@@ -251,11 +217,9 @@
   background: #FFF;
   font-size: 16px; }
 
-/* line 263, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .edit-pane.open {
   display: block; }
 
-/* line 267, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .left-pane {
   display: block;
   position: absolute;
@@ -265,7 +229,6 @@
   height: 150px;
   border-right: 1px solid black; }
 
-/* line 277, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .right-pane {
   display: block;
   position: absolute;
@@ -277,7 +240,6 @@
   padding-left: 10px;
   padding-top: 5px; }
 
-/* line 289, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .edit-pane-close {
   display: block;
   width: 1em;
@@ -291,7 +253,6 @@
   text-align: center;
   vertical-align: middle; }
 
-/* line 311, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 #experiment {
   margin: 18px auto;
   -webkit-perspective: 400px;
@@ -301,7 +262,6 @@
   perspective: 400px;
   perspective-origin: 50% 50%; }
 
-/* line 323, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 #cube {
   position: relative;
   padding: 8px;
@@ -313,9 +273,24 @@
   -moz-transition: -moz-transform 2s linear;
   -moz-transform-style: preserve-3d;
   transition: transform 2s linear;
-  transform-style: preserve-3d; }
+  transform-style: preserve-3d;
+  font-size: 2px; }
 
-/* line 337, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
+#cube * {
+  image-rendering: -moz-crisp-edges;
+  /* Firefox */
+  image-rendering: -o-crisp-edges;
+  /* Opera */
+  image-rendering: crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  /* Webkit (non-standard naming) */
+  -ms-interpolation-mode: nearest-neighbor;
+  /* IE (non-standard property) */ }
+
+#cube .full {
+  width: 16em;
+  height: 16em; }
+
 #cube.spin {
   -webkit-animation: cube 10s linear 0s infinite;
   -moz-animation: cube 10s linear 0s infinite;
@@ -324,219 +299,182 @@
   animation: cube 10s linear 0s infinite; }
 
 @-webkit-keyframes cube {
-  /* line 364, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
   from {
-    -webkit-transform: scale3d(2, 2, 2) rotateY(0deg) rotateX(25deg);
-    -moz-transform: scale3d(2, 2, 2) rotateY(0deg) rotateX(25deg);
-    -ms-transform: scale3d(2, 2, 2) rotateY(0deg) rotateX(25deg);
-    -o-transform: scale3d(2, 2, 2) rotateY(0deg) rotateX(25deg);
-    transform: scale3d(2, 2, 2) rotateY(0deg) rotateX(25deg); }
-
-  /* line 367, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
+    -webkit-transform: rotateY(0deg) rotateX(25deg);
+    -moz-transform: rotateY(0deg) rotateX(25deg);
+    -ms-transform: rotateY(0deg) rotateX(25deg);
+    -o-transform: rotateY(0deg) rotateX(25deg);
+    transform: rotateY(0deg) rotateX(25deg); }
   to {
-    -webkit-transform: scale3d(2, 2, 2) rotateY(360deg) rotateX(25deg);
-    -moz-transform: scale3d(2, 2, 2) rotateY(360deg) rotateX(25deg);
-    -ms-transform: scale3d(2, 2, 2) rotateY(360deg) rotateX(25deg);
-    -o-transform: scale3d(2, 2, 2) rotateY(360deg) rotateX(25deg);
-    transform: scale3d(2, 2, 2) rotateY(360deg) rotateX(25deg); } }
-
+    -webkit-transform: rotateY(360deg) rotateX(25deg);
+    -moz-transform: rotateY(360deg) rotateX(25deg);
+    -ms-transform: rotateY(360deg) rotateX(25deg);
+    -o-transform: rotateY(360deg) rotateX(25deg);
+    transform: rotateY(360deg) rotateX(25deg); } }
 @-moz-keyframes cube {
-  /* line 364, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
   from {
-    -webkit-transform: scale3d(2, 2, 2) rotateY(0deg) rotateX(25deg);
-    -moz-transform: scale3d(2, 2, 2) rotateY(0deg) rotateX(25deg);
-    -ms-transform: scale3d(2, 2, 2) rotateY(0deg) rotateX(25deg);
-    -o-transform: scale3d(2, 2, 2) rotateY(0deg) rotateX(25deg);
-    transform: scale3d(2, 2, 2) rotateY(0deg) rotateX(25deg); }
-
-  /* line 367, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
+    -webkit-transform: rotateY(0deg) rotateX(25deg);
+    -moz-transform: rotateY(0deg) rotateX(25deg);
+    -ms-transform: rotateY(0deg) rotateX(25deg);
+    -o-transform: rotateY(0deg) rotateX(25deg);
+    transform: rotateY(0deg) rotateX(25deg); }
   to {
-    -webkit-transform: scale3d(2, 2, 2) rotateY(360deg) rotateX(25deg);
-    -moz-transform: scale3d(2, 2, 2) rotateY(360deg) rotateX(25deg);
-    -ms-transform: scale3d(2, 2, 2) rotateY(360deg) rotateX(25deg);
-    -o-transform: scale3d(2, 2, 2) rotateY(360deg) rotateX(25deg);
-    transform: scale3d(2, 2, 2) rotateY(360deg) rotateX(25deg); } }
-
+    -webkit-transform: rotateY(360deg) rotateX(25deg);
+    -moz-transform: rotateY(360deg) rotateX(25deg);
+    -ms-transform: rotateY(360deg) rotateX(25deg);
+    -o-transform: rotateY(360deg) rotateX(25deg);
+    transform: rotateY(360deg) rotateX(25deg); } }
 @-o-keyframes cube {
-  /* line 364, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
   from {
-    -webkit-transform: scale3d(2, 2, 2) rotateY(0deg) rotateX(25deg);
-    -moz-transform: scale3d(2, 2, 2) rotateY(0deg) rotateX(25deg);
-    -ms-transform: scale3d(2, 2, 2) rotateY(0deg) rotateX(25deg);
-    -o-transform: scale3d(2, 2, 2) rotateY(0deg) rotateX(25deg);
-    transform: scale3d(2, 2, 2) rotateY(0deg) rotateX(25deg); }
-
-  /* line 367, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
+    -webkit-transform: rotateY(0deg) rotateX(25deg);
+    -moz-transform: rotateY(0deg) rotateX(25deg);
+    -ms-transform: rotateY(0deg) rotateX(25deg);
+    -o-transform: rotateY(0deg) rotateX(25deg);
+    transform: rotateY(0deg) rotateX(25deg); }
   to {
-    -webkit-transform: scale3d(2, 2, 2) rotateY(360deg) rotateX(25deg);
-    -moz-transform: scale3d(2, 2, 2) rotateY(360deg) rotateX(25deg);
-    -ms-transform: scale3d(2, 2, 2) rotateY(360deg) rotateX(25deg);
-    -o-transform: scale3d(2, 2, 2) rotateY(360deg) rotateX(25deg);
-    transform: scale3d(2, 2, 2) rotateY(360deg) rotateX(25deg); } }
-
+    -webkit-transform: rotateY(360deg) rotateX(25deg);
+    -moz-transform: rotateY(360deg) rotateX(25deg);
+    -ms-transform: rotateY(360deg) rotateX(25deg);
+    -o-transform: rotateY(360deg) rotateX(25deg);
+    transform: rotateY(360deg) rotateX(25deg); } }
 @keyframes cube {
-  /* line 364, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
   from {
-    -webkit-transform: scale3d(2, 2, 2) rotateY(0deg) rotateX(25deg);
-    -moz-transform: scale3d(2, 2, 2) rotateY(0deg) rotateX(25deg);
-    -ms-transform: scale3d(2, 2, 2) rotateY(0deg) rotateX(25deg);
-    -o-transform: scale3d(2, 2, 2) rotateY(0deg) rotateX(25deg);
-    transform: scale3d(2, 2, 2) rotateY(0deg) rotateX(25deg); }
-
-  /* line 367, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
+    -webkit-transform: rotateY(0deg) rotateX(25deg);
+    -moz-transform: rotateY(0deg) rotateX(25deg);
+    -ms-transform: rotateY(0deg) rotateX(25deg);
+    -o-transform: rotateY(0deg) rotateX(25deg);
+    transform: rotateY(0deg) rotateX(25deg); }
   to {
-    -webkit-transform: scale3d(2, 2, 2) rotateY(360deg) rotateX(25deg);
-    -moz-transform: scale3d(2, 2, 2) rotateY(360deg) rotateX(25deg);
-    -ms-transform: scale3d(2, 2, 2) rotateY(360deg) rotateX(25deg);
-    -o-transform: scale3d(2, 2, 2) rotateY(360deg) rotateX(25deg);
-    transform: scale3d(2, 2, 2) rotateY(360deg) rotateX(25deg); } }
-
-/* line 372, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
+    -webkit-transform: rotateY(360deg) rotateX(25deg);
+    -moz-transform: rotateY(360deg) rotateX(25deg);
+    -ms-transform: rotateY(360deg) rotateX(25deg);
+    -o-transform: rotateY(360deg) rotateX(25deg);
+    transform: rotateY(360deg) rotateX(25deg); } }
 .face {
   position: absolute;
-  height: 16px;
-  width: 16px;
   background: none;
   color: #000; }
 
-/* line 389, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .face.selectable:after {
   position: absolute;
   left: 0;
   top: 0;
-  width: 16px;
-  height: 16px;
+  width: 16em;
+  height: 16em;
   content: "";
   background: rgba(0, 255, 0, 0.2); }
 
-/* line 393, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .face.not-selectable:after {
   position: absolute;
   left: 0;
   top: 0;
-  width: 16px;
-  height: 16px;
+  width: 16em;
+  height: 16em;
   content: "";
   background: rgba(255, 0, 0, 0.2); }
 
-/* line 398, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .face.selectable:hover:after {
   position: absolute;
   left: 0;
   top: 0;
-  width: 16px;
-  height: 16px;
+  width: 16em;
+  height: 16em;
   content: "";
   background: rgba(0, 255, 0, 0.4); }
 
-/* line 402, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .face.not-selectable:hover:after {
   position: absolute;
   left: 0;
   top: 0;
-  width: 16px;
-  height: 16px;
+  width: 16em;
+  height: 16em;
   content: "";
   background: rgba(255, 0, 0, 0.4); }
 
-/* line 413, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .north:hover:after {
   position: absolute;
   width: 16px;
   height: 16px;
   content: "N"; }
 
-/* line 414, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .south:hover:after {
   position: absolute;
   width: 16px;
   height: 16px;
   content: "S"; }
 
-/* line 415, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .east:hover:after {
   position: absolute;
   width: 16px;
   height: 16px;
   content: "E"; }
 
-/* line 416, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .west:hover:after {
   position: absolute;
   width: 16px;
   height: 16px;
   content: "W"; }
 
-/* line 417, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .top:hover:after {
   position: absolute;
   width: 16px;
   height: 16px;
   content: "T"; }
 
-/* line 418, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .bottom:hover:after {
   position: absolute;
   width: 16px;
   height: 16px;
   content: "B"; }
 
-/* line 420, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 #cube .top {
-  -webkit-transform: rotateX(90deg) translateZ(8px);
-  -moz-transform: rotateX(90deg) translateZ(8px);
-  -ms-transform: rotateX(90deg) translateZ(8px);
-  -o-transform: rotateX(90deg) translateZ(8px);
-  transform: rotateX(90deg) translateZ(8px); }
+  -webkit-transform: rotateX(90deg) translateZ(8em);
+  -moz-transform: rotateX(90deg) translateZ(8em);
+  -ms-transform: rotateX(90deg) translateZ(8em);
+  -o-transform: rotateX(90deg) translateZ(8em);
+  transform: rotateX(90deg) translateZ(8em); }
 
-/* line 424, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 #cube .south {
-  -webkit-transform: translateZ(8px);
-  -moz-transform: translateZ(8px);
-  -ms-transform: translateZ(8px);
-  -o-transform: translateZ(8px);
-  transform: translateZ(8px); }
+  -webkit-transform: translateZ(8em);
+  -moz-transform: translateZ(8em);
+  -ms-transform: translateZ(8em);
+  -o-transform: translateZ(8em);
+  transform: translateZ(8em); }
 
-/* line 428, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 #cube .east {
-  -webkit-transform: rotateY(90deg) translateZ(8px);
-  -moz-transform: rotateY(90deg) translateZ(8px);
-  -ms-transform: rotateY(90deg) translateZ(8px);
-  -o-transform: rotateY(90deg) translateZ(8px);
-  transform: rotateY(90deg) translateZ(8px); }
+  -webkit-transform: rotateY(90deg) translateZ(8em);
+  -moz-transform: rotateY(90deg) translateZ(8em);
+  -ms-transform: rotateY(90deg) translateZ(8em);
+  -o-transform: rotateY(90deg) translateZ(8em);
+  transform: rotateY(90deg) translateZ(8em); }
 
-/* line 432, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 #cube .north {
-  -webkit-transform: rotateY(180deg) translateZ(8px);
-  -moz-transform: rotateY(180deg) translateZ(8px);
-  -ms-transform: rotateY(180deg) translateZ(8px);
-  -o-transform: rotateY(180deg) translateZ(8px);
-  transform: rotateY(180deg) translateZ(8px); }
+  -webkit-transform: rotateY(180deg) translateZ(8em);
+  -moz-transform: rotateY(180deg) translateZ(8em);
+  -ms-transform: rotateY(180deg) translateZ(8em);
+  -o-transform: rotateY(180deg) translateZ(8em);
+  transform: rotateY(180deg) translateZ(8em); }
 
-/* line 436, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 #cube .west {
-  -webkit-transform: rotateY(-90deg) translateZ(8px);
-  -moz-transform: rotateY(-90deg) translateZ(8px);
-  -ms-transform: rotateY(-90deg) translateZ(8px);
-  -o-transform: rotateY(-90deg) translateZ(8px);
-  transform: rotateY(-90deg) translateZ(8px); }
+  -webkit-transform: rotateY(-90deg) translateZ(8em);
+  -moz-transform: rotateY(-90deg) translateZ(8em);
+  -ms-transform: rotateY(-90deg) translateZ(8em);
+  -o-transform: rotateY(-90deg) translateZ(8em);
+  transform: rotateY(-90deg) translateZ(8em); }
 
-/* line 440, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 #cube .bottom {
-  -webkit-transform: rotateX(-90deg) rotate(180deg) translateZ(8px);
-  -moz-transform: rotateX(-90deg) rotate(180deg) translateZ(8px);
-  -ms-transform: rotateX(-90deg) rotate(180deg) translateZ(8px);
-  -o-transform: rotateX(-90deg) rotate(180deg) translateZ(8px);
-  transform: rotateX(-90deg) rotate(180deg) translateZ(8px); }
+  -webkit-transform: rotateX(-90deg) rotate(180deg) translateZ(8em);
+  -moz-transform: rotateX(-90deg) rotate(180deg) translateZ(8em);
+  -ms-transform: rotateX(-90deg) rotate(180deg) translateZ(8em);
+  -o-transform: rotateX(-90deg) rotate(180deg) translateZ(8em);
+  transform: rotateX(-90deg) rotate(180deg) translateZ(8em); }
 
-/* line 444, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 #start-facing-select {
   height: 1.1em;
   background: #C00;
   text-align: center;
   color: #fff; }
 
-/* line 451, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .paused {
   -webkit-animation-play-state: paused;
   -moz-animation-play-state: paused;
@@ -544,7 +482,6 @@
   -o-animation-play-state: paused;
   animation-play-state: paused; }
 
-/* line 459, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .pauseplay {
   width: 20px;
   height: 1.1em;
