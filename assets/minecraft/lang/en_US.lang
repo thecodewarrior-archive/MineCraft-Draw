@@ -1,0 +1,69 @@
+air: 
+--
+stone: Stone
+granite: Granite
+granite_smooth: Polished Granite
+diorite: Diorite
+diorite_smooth: Polished Diorite
+andesite: Andesite
+andesite_smooth: Polished Andesite
+--
+grass: Grass
+dirt: Dirt
+coarse_dirt: Coarse Dirt
+podzol: Podzol
+cobblestone: Cobblestone
+oak_planks: Oak Wood Planks
+spruce_planks: Spruce Wood Planks
+birch_planks: Birch Wood Planks
+jungle_planks: Jungle Wood Planks
+acacia_planks: Acacia Wood Planks
+dark_oak_planks: Dark Oak Wood Planks
+--
+bedrock: Bedrock
+--
+flowing_water: Flowing Water
+still_water: Water Source Block
+flowing_lava: Flowing Lava
+still_lava: Lava Source Block
+--
+sand: Sand
+red_sand: Red Sand
+gravel: Gravel
+--
+gold_ore: Gold Ore
+iron_ore: Iron Ore
+coal_ore: Coal Ore
+--
+oak_log: Oak Wood
+spruce_log: Spruce Wood
+birch_log: Birch Wood
+jungle_log: Jungle Log
+--
+oak_leaves: Oak Tree Leaves
+spruce_leaves: Spruce Tree Leaves
+birch_leaves: Birch Tree Leaves
+jungle_leaves: Jungle tree leaves
+--
+sponge: Sponge
+wet_sponge: Wet Sponge
+--
+glass: Glass
+--
+lapis_ore: Lapis Lazuli Ore
+lapis_block: Lapis Lazuli Block
+--
+dispenser: Dispenser
+--
+sandstone: Sandstone
+chiseled_sandstone: Chiseled Sandstone
+smooth_sandstone: Smooth Sandstone
+--
+noteblock: Note Block
+--
+powered_rail: Powered Rail
+detector_rail: Detector Rail
+--
+sticky_piston: Sticky Piston
+web: Cobweb
+shrub: Dead bush

@@ -139,22 +139,22 @@ function ModMinecraft() {
         top:    'log_oak_top',
         sides:  'log_oak',
         bottom: 'log_oak_top'
-      }, type: 'stb' },
+      }, canFace: 'any', type: 'stb' },
       { id: 17, meta: 1, name: 'spruce_log', tex: {
         top:    'log_spruce_top',
         sides:  'log_spruce',
         bottom: 'log_spruce_top'
-      }, type: 'stb' },
+      }, canFace: 'any', type: 'stb' },
       { id: 17, meta: 2, name: 'birch_log', tex: {
         top:    'log_birch_top',
         sides:  'log_birch',
         bottom: 'log_birch_top'
-      }, type: 'stb' },
+      }, canFace: 'any', type: 'stb' },
       { id: 17, meta: 3, name: 'jungle_log', tex: {
         top:    'log_jungle_top',
         sides:  'log_jungle',
         bottom: 'log_jungle_top'
-      }, type: 'stb' },
+      }, canFace: 'any', type: 'stb' },
       
       { id: 18, meta: 0, name: 'oak_leaves', tex: 'leaves_oak_green' },
       { id: 18, meta: 1, name: 'spruce_leaves', tex: 'leaves_spruce_green' },
