@@ -171,7 +171,7 @@ function Main() {
       if(elem.hasClass('bottom')) { m.editing.facing = Coord.DOWN;  }
       $('.face').removeClass('selectable');
       $('.face').removeClass('not-selectable');
-      m.redrawEditorTexture();
+      m.updateTextures(m.editing.x, m.editing.y, m.editing.z);
     });
     
     $('#cube').on('click','.face.not-selectable', function(evt) {
@@ -192,6 +192,56 @@ function Main() {
       m.ismousedown = true;
       m.world.setBlock(x, y, z, m.selected.dup());
       m.redrawTexture(elem);
+    });
+    
+    $('#editor').on('mouseover', '.grid-cell', function(evt) {
+      var elem = $(this);
+      var x = elem.data('x');
+      var y = elem.data('y');
+      var z = elem.data('z');
+      
+      var name = m.registry.lang[
+        m.world.getBlock(x,y,z).getUnlocalizedName()];
+      
+      if(typeof name === "undefined") {
+        name = "???";
+      }
+      if(name === "") {
+        $('#tooltip').addClass('hidden');
+      } else {
+        $('#tooltip').text(name).removeClass('hidden');
+      }
+    });
+    
+    $('#editor').on('mouseleave', function(evt) {
+      $('#tooltip').addClass('hidden');
+    });
+    
+    $('#selector').on('mouseleave', function(evt) {
+      $('#tooltip').addClass('hidden');
+    });
+    
+    $('#selector').on('mouseover', '.selector-item', function(evt) {
+      var elem = $(this);
+      var b;
+      if(elem.data('id') == 0) {
+        b = m.registry.air;
+      } else {
+        b = m.registry.blocks[elem.data('id')][elem.data('meta')];
+      }
+      var name = m.registry.lang[b.getUnlocalizedName()];
+      if(typeof name === "undefined") {
+        name = "???";
+      }
+      $('#tooltip').text(name).removeClass('hidden');
+    });
+    
+    $('#editor, #selector').bind('mousemove', function(e){
+      if(m.contextOn === true) { return }
+      $('#tooltip').css({
+        left:  e.pageX+3,
+        top:   e.pageY-28
+      });
     });
     
     $('#editor').on('mouseover', '.grid-cell', function() {
@@ -225,12 +275,16 @@ function Main() {
       var menu = $('.context');
       menu.html('');
       
+      m.contextOn = true;
+      
       menu.one('mouseleave', function() {
         $('.context').removeClass('on');
+        m.contextOn = false;
       });
       
       menu.one('click', function() {
         $('.context').removeClass('on');
+        m.contextOn = false;
       });
       
       var menuOuter = $('.context-wrapper')
@@ -247,12 +301,18 @@ function Main() {
       rc_i_m.css('top', evt.pageY-32);
       rc_i_m.css('left', evt.pageX-32);
       
+      var north = $('<div></div>');
+      north.addClass('context-item');
+      north.addClass('context-north');
+      
+      menu.append(north);
+      
       $.each(e, function(i, o) {
         var ce = $('<div></div>');
         ce.append(o);
         ce.addClass('context-item');
         var rotAmt = (deg*i) + 270;
-        var t = "rotate(" + rotAmt + "deg) translate(22px) rotate(-" + rotAmt + "deg)";
+        var t = "rotate(" + rotAmt + "deg) translate(29px) rotate(-" + rotAmt + "deg)";
         ce.css('transform', t);
         ce.css('-o-transform', t);
         ce.css('-ms-transform', t);
@@ -264,7 +324,7 @@ function Main() {
       menu.addClass('on');
       evt.preventDefault();
     });
-    
+        
     $('#selector-outer').on('click', '.selector-item, .selector-item-air, .hotbar-item', function() {
       var elem = $(this);
       if(elem.data('id') == 0) {
@@ -378,6 +438,7 @@ function Main() {
       elem.removeClass('fa-check');
       elem.addClass('fa-arrows-v');
     });
+    
   };
   
   this.registerEvents = function() {
@@ -400,6 +461,10 @@ function Main() {
     this.editing = block;
     $('.edit-pane').addClass('open');
     $('.right-pane').html(block.getEditScreen());
+    var title = $('<div></div>');
+    title.addClass('edit-pane-title');
+    title.html(this.registry.lang[block.getUnlocalizedName()]);
+    $('.right-pane').prepend(title);
     $('.edit-pane-close').click(function() {
       $('.edit-pane').removeClass('open');
     });
@@ -407,8 +472,7 @@ function Main() {
   };
   
   this.updateTextures = function(x, y, z) {
-    console.log("TEXTURE. UPDATE!");
-    if(this.currentLayer === z) {
+    if(this.view.z === z) {
       console.log('updating grid texture');
       var gridItem = $('.grid-cell.cell-coord_' + x + '_' + y + '_' + z + '');
       console.log(gridItem);

@@ -1,9 +1,20 @@
+if (typeof String.prototype.startsWith != 'function') {
+  // see below for better implementation!
+  String.prototype.startsWith = function (str){
+    return this.indexOf(str) == 0;
+  };
+}
+
 function Registry() {
   this.blocks = [];
   this.names = [];
   this.tabs = [];
-  
-  this.air = new Block(0, 0, function(b) { b.getTexture = function( side ) { return $(""); }; });
+  this.lang = {};
+  var r = this;
+  this.air = new Block(0, 0, function(b) {
+    b.getTexture = function( side ) { return $(""); }; 
+    b.getUnlocalizedName = function() { return "minecraft:air" };
+  });
   
   this.registerBlock = function (block) {
     console.log('registered: ' + block.getUnlocalizedName());
@@ -47,6 +58,20 @@ function Registry() {
       console.groupEnd();
     });
     console.groupEnd();
+  };
+  
+  this.addLang = function(langfile, modname) {
+    $.get(langfile,"",function(data,status,jqXHR) {
+      var resp = data.split("\n");
+      $.each(resp, function(i, o) {
+        if(!o.startsWith('--')) {
+          var s = o.split(':');
+          var key = s.shift();
+          var value = s.join(':');
+          r.lang[modname + ":" + key] = value.trim();
+        }
+      });
+    });
   };
 }
 

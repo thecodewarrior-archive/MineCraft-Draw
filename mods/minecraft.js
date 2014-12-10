@@ -52,6 +52,7 @@ function ModMinecraft() {
   }
   
   this.init = function(reg) {
+    reg.addLang(Main.root + "assets/minecraft/lang/en_US.lang", "minecraft");
     /** 
       Basic  { id: 0, meta: 0, name: 'stone', tex: 'stone', (func: function(b) {}) }
       
