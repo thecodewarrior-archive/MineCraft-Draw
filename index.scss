@@ -47,12 +47,102 @@
     src: url(assets/Minecraftia2.ttf);
 }
 
+// region template
+
+  // region 3d-cube
+    .cube {
+      position: relative;
+      padding:8px;
+      height: 22px;
+      width: 22px;
+      margin: 0px auto;
+      -webkit-transition: -webkit-transform 2s linear;
+      -webkit-transform-style: preserve-3d;
+        -moz-transition: -moz-transform 2s linear;
+        -moz-transform-style: preserve-3d;
+             transition: transform 2s linear;
+             transform-style: preserve-3d;
+      font-size:2px;
+    }
+
+    .cube * {
+      @include crisp-images;
+    }
+
+    .cube .full {
+      width:16em;
+      height:16em;
+    }
+
+
+    @include keyframes(cube) {
+      from {
+        @include transform(rotateY(0deg) rotateX(25deg) );
+      }
+      to {
+        @include transform(rotateY(360deg) rotateX(25deg) );
+      }
+    }
+
+    .cube.spin {
+      -webkit-animation: cube 10s linear 0s infinite;
+         -moz-animation: cube 10s linear 0s infinite;
+          -ms-animation: cube 10s linear 0s infinite;
+           -o-animation: cube 10s linear 0s infinite;
+              animation: cube 10s linear 0s infinite;
+    }
+
+    @include keyframes(cube) {
+      from {
+        @include transform(rotateY(0deg) rotateX(25deg) );
+      }
+      to {
+        @include transform(rotateY(360deg) rotateX(25deg) );
+      }
+    }
+
+    .face {
+      position: absolute;
+      background:none;
+      color: #000;
+    }
+    .cube .top  {
+      @include transform(rotateX(90deg) translateZ(8em));
+    }
+
+    .cube .south {
+      @include transform(translateZ(8em));
+    }
+
+    .cube .east {
+      @include transform(rotateY(90deg) translateZ(8em));
+    }
+
+    .cube .north {
+      @include transform(rotateY(180deg) translateZ(8em));
+    }
+
+    .cube .west {
+      @include transform(rotateY(-90deg) translateZ(8em));
+    }
+
+    .cube .bottom {
+      @include transform(rotateX(-90deg) rotate(180deg) translateZ(8em));
+    }
+  // endregion
+
+// endregion
+
 // region selector
+
+#selector-outer {
+  font-size:1px;
+}
 
 #hotbar {
   border: 1px solid black;
   border-right:none;
-  height:16px;
+  height:16em;
   display:inline-block;
   margin:0;
   padding:0;
@@ -61,8 +151,8 @@
 
 .hotbar-item {
   border-right: 1px solid black;
-  height:16px;
-  width:16px;
+  height:16em;
+  width:16em;
   display:inline-block;
   margin:0;
   padding:0;
@@ -95,8 +185,8 @@
 }
 
 #selector-fullwidth {
-  width:154px;
-  height:66px;
+  width:154em;
+  height:66em;
   overflow-x: scroll;
   padding: 3px;
   border: 3px outset gray;
@@ -492,121 +582,57 @@
   perspective-origin: 50% 50%;
 }
 
-
-#cube {
-  position: relative;
-  padding:8px;
-  height: 22px;
-  width: 22px;
-  margin: 0px auto;
-  -webkit-transition: -webkit-transform 2s linear;
-  -webkit-transform-style: preserve-3d;
-    -moz-transition: -moz-transform 2s linear;
-    -moz-transform-style: preserve-3d;
-         transition: transform 2s linear;
-         transform-style: preserve-3d;
-  font-size:2px;
-}
-
-#cube * {
-  @include crisp-images;
-}
-
-#cube .full {
-  width:16em;
-  height:16em;
-}
-
-#cube.spin {
-  -webkit-animation: cube 10s linear 0s infinite;
-     -moz-animation: cube 10s linear 0s infinite;
-      -ms-animation: cube 10s linear 0s infinite;
-       -o-animation: cube 10s linear 0s infinite;
-          animation: cube 10s linear 0s infinite;
-}
-
-@include keyframes(cube) {
-  from {
-    @include transform(rotateY(0deg) rotateX(25deg) );
+.edit-pane {
+  .face {
+    position: absolute;
+    background:none;
+    color: #000;
   }
-  to {
-    @include transform(rotateY(360deg) rotateX(25deg) );
+
+  @mixin face-after {
+    position:absolute;
+    left:0;
+    top:0;
+    font-size: 100%;
+    width: 16em;
+    height: 16em;
+    content: "";
   }
-}
 
-.face {
-  position: absolute;
-  background:none;
-  color: #000;
-}
+  .face.selectable:after {
+    @include face-after;
+    background: rgba(0, 255, 0, 0.2); 
+  }
+  .face.not-selectable:after {
+    @include face-after;
+    background: rgba(255, 0, 0, 0.2);
+  }
 
-@mixin face-after {
-  position:absolute;
-  left:0;
-  top:0;
-  font-size: 100%;
-  width: 16em;
-  height: 16em;
-  content: "";
-}
+  .face.selectable:hover:after {
+    @include face-after;
+    background: rgba(0, 255, 0, 0.4);
+  }
+  .face.not-selectable:hover:after {
+    @include face-after;
+    background: rgba(255, 0, 0, 0.4);
+  }
 
-.face.selectable:after {
-  @include face-after;
-  background: rgba(0, 255, 0, 0.2); 
-}
-.face.not-selectable:after {
-  @include face-after;
-  background: rgba(255, 0, 0, 0.2);
-}
+  @mixin hover-side {
+    position:absolute;
+    width:1em;
+    height:1em;
+    top:0;
+    left:0;
+    font-size:32px;
+    text-align:center;
+  }
 
-.face.selectable:hover:after {
-  @include face-after;
-  background: rgba(0, 255, 0, 0.4);
-}
-.face.not-selectable:hover:after {
-  @include face-after;
-  background: rgba(255, 0, 0, 0.4);
-}
-
-@mixin hover-side {
-  position:absolute;
-  width:1em;
-  height:1em;
-  top:0;
-  left:0;
-  font-size:32px;
-  text-align:center;
-}
-
-.north:hover:after  { @include hover-side; content: "N"; }
-.south:hover:after  { @include hover-side; content: "S"; }
-.east:hover:after   { @include hover-side; content: "E"; }
-.west:hover:after   { @include hover-side; content: "W"; }
-.top:hover:after    { @include hover-side; content: "T"; }
-.bottom:hover:after { @include hover-side; content: "B"; }
-
-#cube .top  {
-  @include transform(rotateX(90deg) translateZ(8em));
-}
-
-#cube .south {
-  @include transform(translateZ(8em));
-}
-
-#cube .east {
-  @include transform(rotateY(90deg) translateZ(8em));
-}
-
-#cube .north {
-  @include transform(rotateY(180deg) translateZ(8em));
-}
-
-#cube .west {
-  @include transform(rotateY(-90deg) translateZ(8em));
-}
-
-#cube .bottom {
-  @include transform(rotateX(-90deg) rotate(180deg) translateZ(8em));
+  .north:hover:after  { @include hover-side; content: "N"; }
+  .south:hover:after  { @include hover-side; content: "S"; }
+  .east:hover:after   { @include hover-side; content: "E"; }
+  .west:hover:after   { @include hover-side; content: "W"; }
+  .top:hover:after    { @include hover-side; content: "T"; }
+  .bottom:hover:after { @include hover-side; content: "B"; }
 }
 
 #start-facing-select {
@@ -651,4 +677,25 @@
 #tooltip.hidden {
   display:none;
 }
+// endregion
+
+// region item
+
+.persp.item {
+  -webkit-perspective: 400px;
+  -webkit-perspective-origin: 50% 50%;
+  -moz-perspective: 400px;
+  -moz-perspective-origin: 50% 50%;
+  perspective: 400px;
+  perspective-origin: 50% 50%; 
+}
+
+.cube.item {
+  padding:0;
+  width: (16em/0.6);
+  height: (16em/0.6);
+  @include transform(translateX(3em) translateY(3em) rotateX(-22deg) rotateY(45deg));
+  font-size:.6em;
+}
+
 // endregion

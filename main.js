@@ -1,6 +1,7 @@
 this.mods = []; // just a place to dump mods
 
 function Main() {
+  Main.instance = this;
   this.registry = new Registry();
   this.registry.runMods();
   this.world = new World(this.registry);
@@ -33,20 +34,22 @@ function Main() {
   };
   
   this.redrawEditorTexture = function() {
-    var b = this.editing;
-    $('#cube .face').html('');
-    $('#cube .custom').html('');
+    this.redraw3DTexture(this.editing, $('#edit-pane-cube'));
+  }
+  
+  this.redraw3DTexture = function(b, elem) {
+    $('.face', elem).html('');
+    $('.custom', elem).html('');
     if(b.hasCustom3DRenderer()) {
-      $('#cube .custom').html(b.getCustom3DRenderer());
+      $('.custom', elem).html(b.getCustom3DRenderer());
     } else {
-      $('#cube .face.north' ).html(b.getTexture(Coord.NORTH));
-      $('#cube .face.south' ).html(b.getTexture(Coord.SOUTH));
-      $('#cube .face.east'  ).html(b.getTexture(Coord.EAST ));
-      $('#cube .face.west'  ).html(b.getTexture(Coord.WEST ));
-      $('#cube .face.top'   ).html(b.getTexture(Coord.UP   ));
-      $('#cube .face.bottom').html(b.getTexture(Coord.DOWN ));
+      $('.face.north' , elem).html(b.getTexture(Coord.NORTH));
+      $('.face.south' , elem).html(b.getTexture(Coord.SOUTH));
+      $('.face.east'  , elem).html(b.getTexture(Coord.EAST ));
+      $('.face.west'  , elem).html(b.getTexture(Coord.WEST ));
+      $('.face.top'   , elem).html(b.getTexture(Coord.UP   ));
+      $('.face.bottom', elem).html(b.getTexture(Coord.DOWN ));
     }
-    
   }
   
   this.redrawSelector = function() {
@@ -81,6 +84,19 @@ function Main() {
 
       sel.append(itm);
     });
+    
+//    this.registry.eachItem(function( id, meta, item ) {
+//      if(typeof item.block === "undefined") return;
+//      
+//      var html = $('<div></div>');
+//      
+//      html.addClass('selector-item');
+//      html.data('id', id);
+//      html.data('meta', meta);
+//      
+//      html.html(item.getTexture());
+//      sel.append(html);
+//    });
     
     $('#selector').replaceWith(sel);
   }
@@ -161,7 +177,7 @@ function Main() {
       
     });
     
-    $('#cube').on('click','.face.selectable', function(evt) {
+    $('#edit-pane-cube').on('click','.face.selectable', function(evt) {
       var elem = $(this);
       if(elem.hasClass('north' )) { m.editing.facing = Coord.NORTH; }
       if(elem.hasClass('south' )) { m.editing.facing = Coord.SOUTH; }
@@ -174,14 +190,14 @@ function Main() {
       m.updateTextures(m.editing.x, m.editing.y, m.editing.z);
     });
     
-    $('#cube').on('click','.face.not-selectable', function(evt) {
+    $('#edit-pane-cube').on('click','.face.not-selectable', function(evt) {
       $('.face').removeClass('selectable');
       $('.face').removeClass('not-selectable');
     });
     
     
     $('#editor').on('dragstart', 'img', function(event) { event.preventDefault(); });
-    $('#cube').on('dragstart', 'img', function(event) { event.preventDefault(); });
+    $('#edit-pane-cube').on('dragstart', 'img', function(event) { event.preventDefault(); });
     
     $('#editor').on('mousedown', '.grid-cell', function(evt) {
       if(evt.which !== 1) return;
@@ -499,6 +515,12 @@ function Main() {
   this.redrawGrid();
   this.redrawSelector();
   this.registerEvents();
+  this.registry.loadLanguages("en_US");
+  
+  $("edit-pane-cube").replaceWith(
+    $( $('#3d-cube').html() ).addClass('spin').attr('id', 'edit-pane-cube')
+  );
+  
   this.registerOnceEvents();
   
 }
@@ -506,5 +528,5 @@ function Main() {
 Main.root = "";
 
 $(function() {
-  window.main = new Main();
+  new Main();
 });

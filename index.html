@@ -9,8 +9,10 @@
     <script src="coord.js"></script>
     <script src="registry.js"></script>
     <script src="block.js"></script>
+    <script src="item.js"></script>
     <script src="world.js"></script>
     <script src="main.js"></script>
+    
     
     <link rel="stylesheet" href="index.css"/>
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
@@ -20,6 +22,34 @@
   </head>
 
   <body>
+    
+    <div id="template-storage" style="display:none;">
+      <div id="3d-cube">
+        <div class="cube"><!-- style="-webkit-transform: rotateX(-45deg) rotateY(45deg);" -->
+          <div class="face top">
+            T
+          </div>
+          <div class="face south">
+            S
+          </div>
+          <div class="face east">
+            E
+          </div>
+          <div class="face north">
+            N
+          </div>
+          <div class="face west">
+            W
+          </div>
+          <div class="face bottom">
+            B
+          </div>
+          <div class="custom">
+
+          </div>
+        </div>
+      </div>
+    </div>
     
     <div id="top">
       <div id="top-left">
@@ -88,7 +118,7 @@
     <div class="edit-pane">
       <div class="left-pane">
         <div id="experiment">
-          <div id="cube" class="spin"><!-- style="-webkit-transform: rotateX(-45deg) rotateY(45deg);" -->
+          <div id="edit-pane-cube" class="cube spin"><!-- style="-webkit-transform: rotateX(-45deg) rotateY(45deg);" -->
             <div class="face top">
               T
             </div>
@@ -113,7 +143,7 @@
           </div>
         </div>
         <div id="start-facing-select">POINT</div>
-        <div class="pauseplay" onclick="$('#cube').toggleClass('paused');$('i', this).toggleClass('fa-pause').toggleClass('fa-play');"><i class="fa fa-pause"></i></div>
+        <div class="pauseplay" onclick="$('#edit-pane-cube').toggleClass('paused');$('i', this).toggleClass('fa-pause').toggleClass('fa-play');"><i class="fa fa-pause"></i></div>
       </div>
       <div class="right-pane"></div>
       <i class="edit-pane-close fa fa-times"></i>

@@ -80,7 +80,7 @@ function Block(id, meta, init) {
     settings.addClass('pointer');
     var b = this;
     settings.click(function(evt) {
-      window.main.openEditWindow(b);
+      Main.instance.openEditWindow(b);
     });
     var a = this.getExtraContextElements(this);
     a.unshift(settings);
@@ -409,16 +409,22 @@ Block.build = function( obj ) {
     }
     
     b.saveToNBT = function() {
+      if(b.getValidFacingDirections().length > 0) {
+        b.nbt['facing'] = b.facing;
+      }
       return JSON.stringify(b.nbt);
     };
     
     b.loadFromNBT = function(nbt) {
       console.log('loading from ' + nbt);
       $.extend(b.nbt, JSON.parse(nbt));
+      if(typeof b.nbt['facing'] !== "undefined") {
+        b.facing = b.nbt['facing'];
+      }
     };
     
     b.hasNBT = function() {
-      return !$.isEmptyObject(b.nbt);
+      return ( !$.isEmptyObject(b.nbt) ) || b.getValidFacingDirections().length > 0;
     };
     
     if(typeof obj['nbt'] !== "undefined") {

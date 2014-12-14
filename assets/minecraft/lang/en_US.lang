@@ -65,5 +65,35 @@ powered_rail: Powered Rail
 detector_rail: Detector Rail
 --
 sticky_piston: Sticky Piston
+piston: Piston
+piston_head: Piston Head
+--
 web: Cobweb
 shrub: Dead bush
+--
+wool_white: White Wool
+wool_orange: Orange Wool
+wool_magenta: Magenta Wool
+wool_light_blue: Light Blue Wool
+wool_yellow: Yellow Wool
+wool_lime: Lime Wool
+wool_pink: Pink Wool
+wool_gray: Gray Wool
+wool_silver: Light Gray Wool
+wool_cyan: Cyan Wool
+wool_purple: Purple Wool
+wool_blue: Blue Wool
+wool_brown: Brown Wool
+wool_green: Green Wool
+wool_red: Red Wool
+wool_black: Black Wool
+--
+--
+--
+--ITEMS--ITEMS--ITEMS--ITEMS--ITEMS--
+oak_sapling: Oak Sapling
+spruce_sapling: Spruce Sapling
+birch_sapling: Birch Sapling
+jungle_sapling: Jungle Sapling
+acacia_sapling: Acacia Sapling
+dark_oak_sapling: Dark Oak Sapling

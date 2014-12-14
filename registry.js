@@ -7,15 +7,45 @@ if (typeof String.prototype.startsWith != 'function') {
 
 function Registry() {
   this.blocks = [];
+  this.items = [];
   this.names = [];
   this.tabs = [];
   this.lang = {};
+  this.langFolders = [];
+  
   var r = this;
   this.air = new Block(0, 0, function(b) {
     b.getTexture = function( side ) { return $(""); }; 
     b.getUnlocalizedName = function() { return "minecraft:air" };
   });
   
+  // region items
+  this.registerItem = function (item) {
+    console.log('registered item: ' + item.getUnlocalizedName());
+    if (typeof this.items[item.id] === "undefined") {
+      this.items[item.id] = [];
+    }
+    this.items[item.id][item.meta] = item;
+  };
+  
+  this.eachItem = function(f) {
+    $.each(this.items, function(id, o) {
+      if(typeof o !== "undefined") {
+        $.each(o, function(meta, item) {
+          if(typeof item !== "undefined") {
+            f(id, meta, item);
+          }
+        });
+      }
+    });
+  };
+  
+  this.newItem = function(id, meta) {
+    return this.blocks[id][meta].dup();
+  };
+  // endregion
+  
+  // region blocks
   this.registerBlock = function (block) {
     console.log('registered: ' + block.getUnlocalizedName());
     if (typeof this.blocks[block.id] === "undefined") {
@@ -40,6 +70,8 @@ function Registry() {
     return this.blocks[id][meta].dup();
   };
   
+  // endregion 
+  
   this.registerName = function (block, name) {
     this.names[block.id] = this.names[block.id] || [];
     this.names[block.id][block.metadata] = name;
@@ -58,6 +90,16 @@ function Registry() {
       console.groupEnd();
     });
     console.groupEnd();
+  };
+  
+  this.langFolder = function(folder, modname) {
+    this.langFolders.push([folder, modname]);
+  };
+  
+  this.loadLanguages = function(locale) {
+    $.each(this.langFolders, function( i, o ) {
+      r.addLang(o[0] + locale + ".lang", o[1]);
+    });
   };
   
   this.addLang = function(langfile, modname) {
