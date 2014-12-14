@@ -439,6 +439,16 @@ function Main() {
       elem.addClass('fa-arrows-v');
     });
     
+    $('#save').click(function() {
+      console.log('SAVING');
+      $('#save-area').val(m.world.save());
+    });
+    
+    $('#load').click(function() {
+      m.world.load($('#save-area').val());
+      m.redrawGrid();
+    });
+    
   };
   
   this.registerEvents = function() {

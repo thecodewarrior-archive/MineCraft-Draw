@@ -36,13 +36,17 @@ function Block(id, meta, init) {
   
   this.getCustom3DRenderer = function () { return this.renderer; };
   
-  this.saveToNBT = function (nbt) {
+  this.saveToNBT = function () {
     
   };
   
-  this.readFromNBT = function (nbt) {
+  this.loadFromNBT = function (nbt) {
     
   };
+  
+  this.hasNBT = function () {
+    return false;
+  }
   
   this.getEditScreen = function () {
     return $('<div></div>');
@@ -93,6 +97,7 @@ function Block(id, meta, init) {
   };
 }
 
+// region facing map
 Block.FRONT  = 'F';
 Block.BACK   = 'B';
 Block.LEFT   = 'L';
@@ -151,24 +156,37 @@ Block.facing_map[Coord.DOWN][Coord.NORTH] = Block.TOP;
 Block.facing_map[Coord.DOWN][Coord.SOUTH] = Block.BOTTOM;
 Block.facing_map[Coord.DOWN][Coord.UP]    = Block.BACK;
 Block.facing_map[Coord.DOWN][Coord.DOWN]  = Block.FRONT;
+// endregion
 
+Block.texExec = function(tex, nbt) {
+  if(typeof tex === "function") {
+    return tex(nbt);
+  } else { return tex; }
+}
 
 Block.build = function( obj ) {
-  var texF = function() {
-    var r = $('<img></img>');
-    r.attr('src', Main.root + "assets/unknown.png");
-    return r;
-  }
-  
-  if(typeof obj['texF'] === "function") {
-    texF = obj['texF'];
-  }
-
   return new Block(obj.id, obj.meta, function(b) {
+    
+    var texF = function() {
+      var r = $('<img></img>');
+      r.attr('src', Main.root + "assets/unknown.png");
+      return r;
+    }
+
+    if(typeof obj['texF'] === "function") {
+      texF = function(tex) {
+        var t = Block.texExec(tex, b.nbt);
+
+        return obj['texF'](t);
+      }
+    }
+    
     b.paramObj = obj;
+    b.nbt = {};
+    
     b.getTexture = function(side) {
       if(typeof obj['fixed'] !== "undefined") {
-        
+        // region fixed
         if(typeof obj['fixed']['top'] !== "undefined" && side === Coord.UP) {
           return texF(obj['fixed']['top']);
         }
@@ -187,7 +205,7 @@ Block.build = function( obj ) {
         if(typeof obj['fixed']['west'] !== "undefined" && side === Coord.WEST) {
           return texF(obj['fixed']['west']);
         }
-        
+        // endregion
       }
       if(obj['type'] === 'facing') {                                 // ******
         
@@ -384,8 +402,27 @@ Block.build = function( obj ) {
       b.hasCustom3DRenderer = function() { return true; };
       b.renderParam = obj['tex']['renderParam'];
       b.getCustom3DRenderer = function() {
-        return obj['tex']['render']( obj['tex']['renderParam'] );
+        return obj['tex']['render']( 
+          obj['tex']['renderParam'], b.nbt
+        );
       };
+    }
+    
+    b.saveToNBT = function() {
+      return JSON.stringify(b.nbt);
+    };
+    
+    b.loadFromNBT = function(nbt) {
+      console.log('loading from ' + nbt);
+      $.extend(b.nbt, JSON.parse(nbt));
+    };
+    
+    b.hasNBT = function() {
+      return !$.isEmptyObject(b.nbt);
+    };
+    
+    if(typeof obj['nbt'] !== "undefined") {
+      b.nbt = JSON.parse(JSON.stringify(obj['nbt']));
     }
     
     if(typeof obj.func === "function") { obj.func(b); }

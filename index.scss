@@ -33,6 +33,15 @@
   -ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
 }
 
+@mixin no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+   -khtml-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
 @font-face {
     font-family: minecraftia;
     src: url(assets/Minecraftia2.ttf);
@@ -131,10 +140,13 @@
 // endregion
 
 // region editor
-
+#top-left {
+  display:inline-block;
+}
 
 #editor-outer {
   display:inline-block;
+  @include no-select;
 }
 
 #editor {
@@ -149,14 +161,9 @@
 #grid {
   border-left: 1px solid black;
   border-top: 1px solid black;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-   -khtml-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
   font-size:1px;
   display:inline-block;
+  @include no-select;
 }
 
 .grid-row {
@@ -284,12 +291,12 @@
     }
     
     .uplayer {
-      left:51px;
+      right:5px;
       top:2px;
     }
     
     .downlayer {
-      left:51px;
+      right:5px;
       bottom:2px;
     }
     
@@ -309,6 +316,7 @@
 
 #grid * {
   @include crisp-images;
+  @include no-select;
 }
 
 #grid .full {
@@ -316,6 +324,41 @@
   height:16em;
 }
 
+// endregion
+
+// region save-load
+#top-right {
+  display:inline-block;
+  vertical-align: top;
+  margin-top:30px;
+}
+
+#save {
+  background: #00C800;
+  width:50%;
+  height:auto;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+}
+
+#load {
+  background: #C80000;
+  width:50%;
+  height:auto;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+}
+
+#save-area {
+  width:25em;
+  height:4em;
+}
+
+#save-load-outer {
+  display:inline-block;
+}
 // endregion
 
 // region context menu
@@ -603,6 +646,7 @@
   padding:0 3px 0 3px;
   text-align: center;
   vertical-align: middle;
+  @include no-select;
 }
 #tooltip.hidden {
   display:none;

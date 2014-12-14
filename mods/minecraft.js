@@ -26,24 +26,30 @@ function ModMinecraft() {
   };
   
   this.renderers = {
-    rail: function(obj) {
+    rail: function(obj, nbt) {
       var railbed = $('<div class="mc-face railbed"></div>');
-      railbed.append(m.tex(obj['tex']));
+      railbed.append(m.tex(
+        Block.texExec(obj['tex'], nbt)
+      ));
       var set = railbed.add(m.renderers.ground(obj));
       return set;
     },
     X: function(obj) {
       var one = $('<div class="mc-face Xa"></div>');
-      one.append(m.tex(obj['tex']));
+      one.append(m.tex(
+        Block.texExec(obj['tex'], nbt)
+      ));
       var two = $('<div class="mc-face Xb"></div>');
-      two.append(m.tex(obj['tex']));
+      two.append(m.tex(
+        Block.texExec(obj['tex'])
+      ));
       var set = one.add(two).add(m.renderers.ground(obj));
       return set;
     },
     ground: function(obj) {
       var ground = $('<div class="mc-face ground"></div>');
-      var gnd = obj['ground'];
-      if(typeof obj['ground'] === "undefined") {
+      var gnd = Block.texExec(obj['ground']);
+      if(typeof gnd === "undefined") {
         gnd = 'stone';
       }
       ground.append(m.tex(gnd));
@@ -136,25 +142,25 @@ function ModMinecraft() {
       { id: 16, meta: 0, name: 'coal_ore', tex: 'coal_ore' },
       
       { id: 17, meta: 0, name: 'oak_log', tex: {
-        top:    'log_oak_top',
+        front:    'log_oak_top',
         sides:  'log_oak',
-        bottom: 'log_oak_top'
-      }, canFace: 'any', type: 'stb' },
+        back: 'log_oak_top'
+      }, canFace: 'any', type: 'facing' },
       { id: 17, meta: 1, name: 'spruce_log', tex: {
-        top:    'log_spruce_top',
+        front:    'log_spruce_top',
         sides:  'log_spruce',
-        bottom: 'log_spruce_top'
-      }, canFace: 'any', type: 'stb' },
+        back:   'log_spruce_top'
+      }, canFace: 'any', type: 'facing' },
       { id: 17, meta: 2, name: 'birch_log', tex: {
-        top:    'log_birch_top',
+        front:    'log_birch_top',
         sides:  'log_birch',
-        bottom: 'log_birch_top'
-      }, canFace: 'any', type: 'stb' },
+        back: 'log_birch_top'
+      }, canFace: 'any', type: 'facing' },
       { id: 17, meta: 3, name: 'jungle_log', tex: {
-        top:    'log_jungle_top',
+        front:    'log_jungle_top',
         sides:  'log_jungle',
-        bottom: 'log_jungle_top'
-      }, canFace: 'any', type: 'stb' },
+        back: 'log_jungle_top'
+      }, canFace: 'any', type: 'facing' },
       
       { id: 18, meta: 0, name: 'oak_leaves', tex: 'leaves_oak_green' },
       { id: 18, meta: 1, name: 'spruce_leaves', tex: 'leaves_spruce_green' },
@@ -197,28 +203,41 @@ function ModMinecraft() {
       { id: 25, meta: 0, name: 'noteblock', tex: 'noteblock' },
       
       { id: 27, meta: 0, name: 'powered_rail', tex: {
-        icon:'rail_golden',
+        icon:function(nbt) {
+          if(nbt['power'] === true) {
+            return 'rail_golden_powered';
+          } else {
+            return 'rail_golden';
+          }
+        },
         renderParam: {
-          tex: 'rail_golden'
+          tex: function(nbt) {
+            if(nbt['power'] === true) {
+              return 'rail_golden_powered';
+            } else {
+              return 'rail_golden';
+            }
+          }
         },
         render: this.renderers.rail
-      }, type:"customRender", func: function(b) {
+      }, type:"customRender", nbt:{'power':false}, func: function(b) {
         b.getContextElements = function() {
           var power = $('<i></i>');
           power.addClass('fa');
           power.addClass('fa-plug');
           power.addClass('pointer');
-          if(b.paramObj.tex.icon === 'rail_golden_powered') {
+          if(b.nbt['power'] === true) {
             power.addClass('context-item-active');
           }
           power.click(function() {
-            if(b.paramObj.tex.icon === 'rail_golden') {
-              b.paramObj.tex.icon = 'rail_golden_powered';
-              b.renderParam.tex = 'rail_golden_powered';
-            } else {
-              b.paramObj.tex.icon = 'rail_golden';
-              b.renderParam.tex = 'rail_golden';
-            }
+//            if(b.paramObj.tex.icon === 'rail_golden') {
+//              b.paramObj.tex.icon = 'rail_golden_powered';
+//              b.renderParam.tex = 'rail_golden_powered';
+//            } else {
+//              b.paramObj.tex.icon = 'rail_golden';
+//              b.renderParam.tex = 'rail_golden';
+//            }
+            b.nbt['power'] = !b.nbt['power'];
             b.updateTextures();
           });
           return [power];

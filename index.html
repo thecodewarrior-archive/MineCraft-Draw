@@ -21,43 +21,57 @@
 
   <body>
     
-    <div id="selector-outer">
-      <div id="selector-tabs"><div class="tab selected"></div><div class="tab"></div><div class="tab"></div><div class="tab"></div></div>
-      <div id="selector-fullwidth"><div id="selector"></div></div>
-      <div id="hotbar-border"><div id="hotbar">
-        <div class="hotbar-item"></div><div class="hotbar-item"></div><div class="hotbar-item"></div><div class="hotbar-item"></div><div class="hotbar-item"></div><div class="hotbar-item"></div><div class="hotbar-item"></div><div class="hotbar-item"></div><div class="hotbar-item"></div>
-      </div></div>
-    </div>
-    
-    <div class="editor-toolbar">
-      <div id="arrows">
-        <div class="pointer goup">
+    <div id="top">
+      <div id="top-left">
+        <div id="selector-outer">
+          <div id="selector-tabs"><div class="tab selected"></div><div class="tab"></div><div class="tab"></div><div class="tab"></div></div>
+          <div id="selector-fullwidth"><div id="selector"></div></div>
+          <div id="hotbar-border"><div id="hotbar">
+            <div class="hotbar-item"></div><div class="hotbar-item"></div><div class="hotbar-item"></div><div class="hotbar-item"></div><div class="hotbar-item"></div><div class="hotbar-item"></div><div class="hotbar-item"></div><div class="hotbar-item"></div><div class="hotbar-item"></div>
+          </div></div>
         </div>
-        <div class="pointer goleft">
-        </div>
-        <div class="pointer goright">
-        </div>
-        <div class="pointer godown">
-        </div>
-        <div class="pointer uplayer">
-        </div>
-        <div class="pointer downlayer">
-        </div>
-        <div class="z-indicator">0
+        <div class="editor-toolbar">
+          <div id="arrows">
+            <div class="pointer goup">
+            </div>
+            <div class="pointer goleft">
+            </div>
+            <div class="pointer goright">
+            </div>
+            <div class="pointer godown">
+            </div>
+            <div class="pointer uplayer">
+            </div>
+            <div class="pointer downlayer">
+            </div>
+            <div class="z-indicator">0
+            </div>
+          </div>
+          <div id="size-change-outer">
+            <div id="width-change-outer">
+              <i class="fa fa-arrows-h"></i>
+              <div id="width-editbox" contenteditable="true"></div>
+            </div>
+            <div id="height-change-outer">
+              <i class="fa fa-arrows-v"></i>
+              <div id="height-editbox" contenteditable="true"></div>
+            </div>
+          </div>
         </div>
       </div>
-      <div id="size-change-outer">
-        <div id="width-change-outer">
-          <i class="fa fa-arrows-h"></i>
-          <div id="width-editbox" contenteditable="true"></div>
-        </div>
-        <div id="height-change-outer">
-          <i class="fa fa-arrows-v"></i>
-          <div id="height-editbox" contenteditable="true"></div>
+      
+      <div id="top-right">
+        <div id="save-load-outer">
+          <div id="save-load-buttons-outer">
+            <div id="save" class="pointer">SAVE</div><div id="load" class="pointer">LOAD</div>
+          </div>
+          <textarea id="save-area"></textarea>
         </div>
       </div>
+      
     </div>
-    
+      
+      
     <div id="axes">
       <img src="assets/axes.png">
     </div>
