@@ -66,7 +66,7 @@ function Block(id, meta, init) {
   }
   
   this.updateTextures = function() {
-    window.main.updateTextures(this.x, this.y, this.z);
+    Main.instance.updateTextures(this.x, this.y, this.z);
   }
   
   init(this);
@@ -82,8 +82,18 @@ function Block(id, meta, init) {
     settings.click(function(evt) {
       Main.instance.openEditWindow(b);
     });
+    
+    var fill = $('<img></img>');
+    fill.attr('src',Main.root + "assets/bucket.png");
+    fill.addClass('pointer');
+    fill.click(function() {
+      Main.instance.fill(b.x, b.y, b.z, b);
+    });
+    
     var a = this.getExtraContextElements(this);
+    a.unshift(fill);
     a.unshift(settings);
+    
     return a;
   };
   

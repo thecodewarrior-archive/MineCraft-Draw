@@ -34,9 +34,15 @@ function World(reg) {
   }
   
   this.getBlock = function(x, y, z) {
-    if(typeof this.blocks[x]       === "undefined") return this.registry.air;
-    if(typeof this.blocks[x][y]    === "undefined") return this.registry.air;
-    if(typeof this.blocks[x][y][z] === "undefined") return this.registry.air;
+    if(typeof this.blocks[x]       === "undefined" ||
+       typeof this.blocks[x][y]    === "undefined" ||
+       typeof this.blocks[x][y][z] === "undefined") {
+      var airpos = this.registry.air.dup();
+      airpos.x = x;
+      airpos.y = y;
+      airpos.z = z;
+      return airpos;
+    }
     return this.blocks[x][y][z];
   };
   

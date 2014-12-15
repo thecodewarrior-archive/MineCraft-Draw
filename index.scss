@@ -677,6 +677,17 @@
 #tooltip.hidden {
   display:none;
 }
+
+#fill-tooltip {
+  position: absolute;
+  width:16px;
+  height:16px;
+  background: url(assets/bucket_black.png);
+  @include no-select;
+}
+#fill-tooltip.hidden, #fill-tooltip.out-of-bounds {
+  display:none;
+}
 // endregion
 
 // region item

@@ -76,7 +76,7 @@ function Main() {
       var itm = $('<div></div>');
 
       itm.addClass('selector-item');
-
+      itm.addClass('block-type_' + id + '_' + meta);
       itm.data('id', id);
       itm.data('meta', meta);
       
@@ -205,9 +205,16 @@ function Main() {
       var x = elem.data('x');
       var y = elem.data('y');
       var z = elem.data('z');
-      m.ismousedown = true;
-      m.world.setBlock(x, y, z, m.selected.dup());
-      m.redrawTexture(elem);
+      
+      if(m.fillMode == true) {
+        m.fillMode = !m.fillMode;
+        var fill = $('#fill-tooltip').toggleClass('hidden');
+        m.fill(x,y,z);
+      } else {
+        m.ismousedown = true;
+        m.world.setBlock(x, y, z, m.selected.dup());
+        m.redrawTexture(elem);
+      }
     });
     
     $('#editor').on('mouseover', '.grid-cell', function(evt) {
@@ -229,8 +236,13 @@ function Main() {
       }
     });
     
+    $('#editor').on('mouseenter', function(evt) {
+      $('#fill-tooltip').removeClass('out-of-bounds');
+    });
+    
     $('#editor').on('mouseleave', function(evt) {
       $('#tooltip').addClass('hidden');
+      $('#fill-tooltip').addClass('out-of-bounds');
     });
     
     $('#selector').on('mouseleave', function(evt) {
@@ -257,6 +269,14 @@ function Main() {
       $('#tooltip').css({
         left:  e.pageX+3,
         top:   e.pageY-28
+      });
+    });
+    
+    $('#editor').bind('mousemove', function(e) {
+      if(m.fillMode == false) { return }
+      $('#fill-tooltip').css({
+        left:  e.pageX+10,
+        top:   e.pageY+10
       });
     });
     
@@ -393,6 +413,14 @@ function Main() {
       m.redrawGrid();
     });
     
+    $(document).keydown(function(event) {
+      console.log("keydown: " + event.which);
+      var obj = m.shortcuts[event.which];
+      if(typeof obj === "function") {
+        obj(event);
+      }
+    });
+    
     $('#height-editbox').keydown(function(event) {
       var elem = $(this);
       if(event.keyCode >= 48 && event.keyCode < 57 || event.keyCode === 8) {
@@ -474,6 +502,47 @@ function Main() {
     
   };
   
+  this.oldselected = null;
+  this.shortcuts = {
+    37: function() { // Left
+      m.view.y += 1;
+      m.redrawGrid();
+    },
+    39: function() { // Right
+      m.view.y -= 1;
+      m.redrawGrid();
+    },
+    38: function() { // Up
+      m.view.x += 1;
+      m.redrawGrid();
+    },
+    40: function() { // Down
+      m.view.x -= 1;
+      m.redrawGrid();
+    },
+    69: function() { // E
+      var elem;
+      if(m.oldselected === null) {
+        m.oldselected = m.selected;
+        m.selected = m.registry.air;
+        
+        elem = $('.selector-item-air');
+        elem.siblings().removeClass('selected');
+        elem.addClass('selected');
+      } else {
+        m.selected = m.oldselected;
+        m.oldselected = null;
+        
+        elem = $('.block-type_' + m.selected.id + '_' + m.selected.meta);
+        elem.siblings().removeClass('selected');
+        elem.addClass('selected');
+      }
+    },
+    70: function() { // F
+      m.fillMode = !m.fillMode;
+      var fill = $('#fill-tooltip').toggleClass('hidden');
+    }
+  }
   
   $(".tab").click(function() {
     var elem = $(this);
@@ -499,15 +568,39 @@ function Main() {
   
   this.updateTextures = function(x, y, z) {
     if(this.view.z === z) {
-      console.log('updating grid texture');
+      //console.log('updating grid texture');
       var gridItem = $('.grid-cell.cell-coord_' + x + '_' + y + '_' + z + '');
-      console.log(gridItem);
+      //console.log(gridItem);
       this.redrawTexture(gridItem);
     }
     if(this.world.getBlock(x,y,z) === this.editing) {
-      console.log('updating editor texture');
+      //console.log('updating editor texture');
       this.redrawEditorTexture();
     }
+  }
+  
+  
+  this.fill = function(x,y,z, target, replacement) {
+    if(typeof replacement === "undefined") replacement = m.selected;
+    if(typeof target === "undefined") target = m.world.getBlock(x,y,z);
+    //console.log("filling "+x+","+y+","+z+": " + target.getUnlocalizedName() + " with " + replacement.getUnlocalizedName());
+    
+    if(target.getUnlocalizedName() === replacement.getUnlocalizedName()) return;
+    if(this.world.getBlock(x,y,z).getUnlocalizedName() !== target.getUnlocalizedName()) return;
+    
+    if(x < this.view.x) return;
+    if(x > this.view.x + this.view.w) return;
+    if(y < this.view.y) return;
+    if(y > this.view.y + this.view.h) return;
+    
+    this.world.setBlock(x,y,z, replacement.dup());
+    this.world.getBlock(x,y,z).updateTextures();
+    
+    this.fill(x+1, y  , z, target, replacement);
+    this.fill(x-1, y  , z, target, replacement);
+    this.fill(x  , y+1, z, target, replacement);
+    this.fill(x  , y-1, z, target, replacement);
+    
   }
   
   $('#height-editbox').text(this.view.h);
