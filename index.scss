@@ -678,15 +678,22 @@
   display:none;
 }
 
-#fill-tooltip {
+.cursor-icon {
   position: absolute;
   width:16px;
   height:16px;
-  background: url(assets/bucket_black.png);
   @include no-select;
 }
-#fill-tooltip.hidden, #fill-tooltip.out-of-bounds {
+.cursor-icon.hidden, .cursor-icon.out-of-bounds {
   display:none;
+}
+
+#tool-fill {
+  background: url(assets/bucket_black.png);
+}
+
+#tool-eyedropper {
+  background: url(assets/eyedropper.png);
 }
 // endregion
 

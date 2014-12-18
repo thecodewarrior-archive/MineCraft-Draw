@@ -75,19 +75,16 @@ function Block(id, meta, init) {
   
   this.getContextElements = function() {
     var settings = $('<i></i>');
-    settings.addClass('fa');
-    settings.addClass('fa-cog');
-    settings.addClass('pointer');
+    settings.addClass('fa fa-cog pointer');
     var b = this;
     settings.click(function(evt) {
       Main.instance.openEditWindow(b);
     });
     
-    var fill = $('<img></img>');
-    fill.attr('src',Main.root + "assets/bucket.png");
-    fill.addClass('pointer');
+    var fill = $('<i></i>');
+    fill.addClass('fa fa-eyedropper pointer');
     fill.click(function() {
-      Main.instance.fill(b.x, b.y, b.z, b);
+      Main.instance.selected = b.dup();
     });
     
     var a = this.getExtraContextElements(this);
@@ -103,7 +100,9 @@ function Block(id, meta, init) {
   this.meta = meta;
   
   this.dup = function() {
-    return new Block(this.id, this.meta, this.init);
+    var b = new Block(this.id, this.meta, this.init);
+    b.loadFromNBT(this.saveToNBT());
+    return b;
   };
 }
 

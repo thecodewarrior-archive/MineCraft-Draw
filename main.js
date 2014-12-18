@@ -7,6 +7,32 @@ function Main() {
   this.world = new World(this.registry);
   this.view = {};
   
+  this.tool = {
+    tool: '',
+    changeTo: function(tool) {
+      if(tool === this.tool) {
+        this.tool = ''; return;
+      }
+      this.tool = tool;
+      var icon = $('.cursor-icon');
+      if(this.tool === '') {
+        icon.addClass('hidden');
+      } else {
+        icon.removeClass('hidden');
+      }
+      icon.attr('id','tool-' + this.tool);
+    },
+    noTool: function() {
+      icon = $('.cursor-icon');
+      icon.addClass('hidden');
+      icon.attr('id', '');
+      this.tool = '';
+    },
+    toolActive: function(tool) {
+      return tool === this.tool;
+    }
+  };
+  
   this.editing = null;
   
   this.view.x = -5;
@@ -206,10 +232,14 @@ function Main() {
       var y = elem.data('y');
       var z = elem.data('z');
       
-      if(m.fillMode == true) {
-        m.fillMode = !m.fillMode;
-        var fill = $('#fill-tooltip').toggleClass('hidden');
+      if(m.tool.toolActive('fill')) {
+        m.tool.noTool();
         m.fill(x,y,z);
+        
+      } else if(m.tool.toolActive('eyedropper')) {
+        m.tool.noTool();
+        m.selected = m.world.getBlock(x,y,z).dup();
+        
       } else {
         m.ismousedown = true;
         m.world.setBlock(x, y, z, m.selected.dup());
@@ -237,12 +267,12 @@ function Main() {
     });
     
     $('#editor').on('mouseenter', function(evt) {
-      $('#fill-tooltip').removeClass('out-of-bounds');
+      $('.cursor-icon').removeClass('out-of-bounds');
     });
     
     $('#editor').on('mouseleave', function(evt) {
       $('#tooltip').addClass('hidden');
-      $('#fill-tooltip').addClass('out-of-bounds');
+      $('.cursor-icon').addClass('out-of-bounds');
     });
     
     $('#selector').on('mouseleave', function(evt) {
@@ -274,7 +304,7 @@ function Main() {
     
     $('#editor').bind('mousemove', function(e) {
       if(m.fillMode == false) { return }
-      $('#fill-tooltip').css({
+      $('.cursor-icon').css({
         left:  e.pageX+10,
         top:   e.pageY+10
       });
@@ -539,8 +569,10 @@ function Main() {
       }
     },
     70: function() { // F
-      m.fillMode = !m.fillMode;
-      var fill = $('#fill-tooltip').toggleClass('hidden');
+      m.tool.changeTo('fill');
+    },
+    73: function() { // I
+      m.tool.changeTo('eyedropper');
     }
   }
   
@@ -588,10 +620,10 @@ function Main() {
     if(target.getUnlocalizedName() === replacement.getUnlocalizedName()) return;
     if(this.world.getBlock(x,y,z).getUnlocalizedName() !== target.getUnlocalizedName()) return;
     
-    if(x < this.view.x) return;
-    if(x > this.view.x + this.view.w) return;
-    if(y < this.view.y) return;
-    if(y > this.view.y + this.view.h) return;
+    if(x <  this.view.x) return;
+    if(x >= this.view.x + this.view.w) return;
+    if(y <  this.view.y) return;
+    if(y >= this.view.y + this.view.h) return;
     
     this.world.setBlock(x,y,z, replacement.dup());
     this.world.getBlock(x,y,z).updateTextures();

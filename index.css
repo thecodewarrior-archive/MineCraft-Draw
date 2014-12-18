@@ -825,11 +825,10 @@
   display: none; }
 
 /* line 681, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
-#fill-tooltip {
+.cursor-icon {
   position: absolute;
   width: 16px;
   height: 16px;
-  background: url(assets/bucket_black.png);
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -837,11 +836,19 @@
   -ms-user-select: none;
   user-select: none; }
 
-/* line 688, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
-#fill-tooltip.hidden, #fill-tooltip.out-of-bounds {
+/* line 687, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
+.cursor-icon.hidden, .cursor-icon.out-of-bounds {
   display: none; }
 
+/* line 691, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
+#tool-fill {
+  background: url(assets/bucket_black.png); }
+
 /* line 695, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
+#tool-eyedropper {
+  background: url(assets/eyedropper.png); }
+
+/* line 702, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .persp.item {
   -webkit-perspective: 400px;
   -webkit-perspective-origin: 50% 50%;
@@ -850,7 +857,7 @@
   perspective: 400px;
   perspective-origin: 50% 50%; }
 
-/* line 704, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
+/* line 711, /Users/piercecorcoran/Desktop/MineCraft Draw/index.scss */
 .cube.item {
   padding: 0;
   width: 26.66667em;
